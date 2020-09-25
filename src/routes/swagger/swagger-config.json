@@ -1,0 +1,13 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"title": "HSD OSSC API",
+		"version": "0.2.0",
+		"description": "Swagger Editor under [https://editor.swagger.io](https://editor.swagger.io)",
+		"contact": {
+			"email": "andre.kuhlmann@study.hs-duesseldorf.de"
+		}
+	},
+	"host": "https://ossc.kuhlti.me",
+	"basePath": "/v1"
+}

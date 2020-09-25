@@ -1,0 +1,31 @@
+// Documentation: https://www.typescriptlang.org/tsconfig
+// https://duncanleung.com/typescript-module-declearation-svg-img-assets/
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"module": "commonjs",
+		"esModuleInterop": true, // Fixes an issue with the import statement
+		"allowSyntheticDefaultImports": true, // When enabled imports can be written as such: import express from 'express'
+		"target": "es6", // The version of javascript the typescript code should be transpiled to (ES6 is supported by 97.11% as of Sept. 2020)
+		"noImplicitAny": true, // In cases where the value type is not declared and can't be inferred noImplicitAny outputs an error
+		"moduleResolution": "node",
+		"sourceMap": true, // Enables the generation of a source map files. A source map allows the debugger to display the original origin of a file
+		"outDir": "dist", // The directory to which the generated files will be written to
+		"baseUrl": ".",
+		"strict": true, // ?
+		"resolveJsonModule": true, // ?
+		"paths": {
+			"*": [
+				"node_modules/*",
+				"src/types/*"
+			]
+		},
+		"typeRoots": [
+			"./src/@types/**/*",
+			"./node_modules/@types/**/*"
+		]
+	},
+	"include": [
+		"src/**/*",
+	]
+}
