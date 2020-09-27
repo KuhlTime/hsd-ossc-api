@@ -5,12 +5,8 @@ import swaggerStats from 'swagger-stats'
 // setup router
 const router = Router()
 
-import swaggerConfig from './swagger-config.json'
-
-console.log(swaggerConfig)
-
 // load swagger config
-// const swaggerConfig = yaml('./swagger-config.yml')
+import swaggerConfig from './swagger-config.json'
 
 // set routes
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig))

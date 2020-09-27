@@ -13,17 +13,7 @@
 		"outDir": "dist", // The directory to which the generated files will be written to
 		"baseUrl": ".",
 		"strict": true, // ?
-		"resolveJsonModule": true, // ?
-		"paths": {
-			"*": [
-				"node_modules/*",
-				"src/types/*"
-			]
-		},
-		"typeRoots": [
-			"./src/@types/**/*",
-			"./node_modules/@types/**/*"
-		]
+		"resolveJsonModule": true, // Resolves JSON files
 	},
 	"include": [
 		"src/**/*",
