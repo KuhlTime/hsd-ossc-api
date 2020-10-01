@@ -6,6 +6,7 @@
 
 interface Array<T> {
 	last(): T | undefined
+	merge(): Record<string, unknown>
 }
 
 interface String {

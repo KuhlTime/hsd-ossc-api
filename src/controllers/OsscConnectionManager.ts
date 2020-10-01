@@ -3,7 +3,7 @@ import { IncomingMessage } from 'http'
 import querystring from 'querystring'
 import { TableParser, Table } from '../controllers/TableParser'
 import fs from 'fs'
-import { ModuleExtract } from '../models'
+import { ModuleExtract, Student } from '../models'
 import colors from 'colors'
 
 export default class OsscConnectionManager {
@@ -238,8 +238,9 @@ export default class OsscConnectionManager {
 			}
 
 			const requestOptions = this.generateGetRequestOptions(cookie, params)
-
-			const request = https.request(requestOptions)
+			const request = https.request(requestOptions, _ => {
+				resolve()
+			})
 
 			request.on('error', e => {
 				console.error(e.message)
@@ -271,6 +272,8 @@ export default class OsscConnectionManager {
 
 			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
 
+			const student = new Student(tables[0])
+			console.log(student)
 			const result = new ModuleExtract(tables[1])
 
 			const duration = Date.now() - start
@@ -282,6 +285,7 @@ export default class OsscConnectionManager {
 
 			return Promise.resolve({
 				duration,
+				student,
 				data: result
 			})
 		} catch (e) {

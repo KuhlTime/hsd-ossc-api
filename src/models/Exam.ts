@@ -10,6 +10,6 @@ export default class Exam {
 		this.semester = row['semester']
 		this.grade = parseFloat(row['Note'].replace(',', '.'))
 		this.passed = row['Status'] === 'bestanden'
-		this.examinationDate = moment(row['Prüfungsdatum'], 'DD.MM.YYYY').toDate()
+		this.examinationDate = moment(row['Prüfungsdatum'], 'DD.MM.YYYY').utc().toDate()
 	}
 }

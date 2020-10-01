@@ -35,6 +35,8 @@ class TableParser {
 
 			const $rows = $(table).find('tr')
 
+			let isHorizontal = false
+
 			$rows.each((_, row) => {
 				const $row = $(row)
 
@@ -52,14 +54,16 @@ class TableParser {
 				// when both th and td are in the same row it can be assumed the table is horizontal
 				if ($headerCells.length !== 0 && $cells.length !== 0) {
 					/**
-					 * Horizontally alligned tables
+					 * HORIZONTALLY alligned tables
 					 * where the table head is in the same row as the value
 					 */
 					const key: string = tableData.headers.last() || ''
 					rowData[key] = $cells.first().text().clean()
+
+					isHorizontal = true
 				} else if ($headerCells.length === 0) {
 					/**
-					 * Vertically alligned table
+					 * VERTICALLY alligned table
 					 * where the table head is at the top and the content follows in the rows below
 					 * normal table
 					 */
@@ -82,6 +86,10 @@ class TableParser {
 					tableData.rows.push(rowData)
 				}
 			})
+
+			if (isHorizontal) {
+				tableData.rows = [tableData.rows.merge() as Record<string, string>]
+			}
 
 			tables.push(tableData)
 		})
