@@ -16,7 +16,7 @@
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc-watch --onSuccess 'node ./dist/server.js'",
-		"start": "node dist/server.js",
+		"start": "tsc && node dist/server.js",
 		"lint": "eslint"
 	},
 	"keywords": [
