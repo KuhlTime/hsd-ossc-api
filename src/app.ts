@@ -19,7 +19,7 @@ app.use(swaggerRouter)
 app.use(gradesRouter)
 
 // setup routes
-app.get('/', (req, res) => {
+app.get('/info', (req, res) => {
 	console.log('Recived Request')
 	res.send({
 		author: 'André Kuhlmann',

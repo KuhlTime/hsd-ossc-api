@@ -6,7 +6,7 @@ import OsscConnectionManager from '../../controllers/OsscConnectionManager'
 const router = Router()
 
 // set routes
-router.get('/grades', (req: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
 	const user = auth(req)
 
 	console.log('Recived request /grades')
