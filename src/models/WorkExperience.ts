@@ -1,6 +1,11 @@
-import Semester from './Semester'
+import { Semester } from './'
 
-export default interface WorkExperience {
-	semester: Semester
+export default class WorkExperience {
+	semester: string
 	passed: boolean
+
+	constructor(row: Record<string, string>) {
+		this.semester = row['Semester']
+		this.passed = row['Status'] === 'bestanden'
+	}
 }

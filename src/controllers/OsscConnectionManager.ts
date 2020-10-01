@@ -1,16 +1,21 @@
-import { BasicAuthResult } from 'basic-auth'
 import https from 'https'
+import { IncomingMessage } from 'http'
 import querystring from 'querystring'
+import { TableParser, Table } from '../controllers/TableParser'
+import fs from 'fs'
+import { ModuleExtract } from '../models'
+import colors from 'colors'
 
 export default class OsscConnectionManager {
-	host = 'https://ossc.hs-duesseldorf.de/'
-	path = 'qisserver/rds'
+	static host = 'ossc.hs-duesseldorf.de'
+	static path = '/qisserver/rds'
 
-	private async authLogin(user: BasicAuthResult) {
-		this.login(user.name, user.pass)
-	}
-
-	private async login(username: string, password: string): Promise<string> {
+	/**
+	 * Given valid username and password the function returns the authentication cookie.
+	 * @param username The username registerd inside the OSSC
+	 * @param password The password used to log into the account
+	 */
+	private static async getCookie(username: string, password: string): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const body = {
 				asdf: username,
@@ -29,8 +34,14 @@ export default class OsscConnectionManager {
 			const requestOptions = {
 				hostname: this.host,
 				path: this.generatePath(params),
-				method: 'POST'
+				method: 'POST',
+				port: 443,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}
 			}
+
+			console.log(JSON.stringify(requestOptions))
 
 			const request = https.request(requestOptions, res => {
 				/**
@@ -46,7 +57,6 @@ export default class OsscConnectionManager {
 
 			// On request error
 			request.on('error', e => {
-				console.error(e.message)
 				reject(e)
 			})
 
@@ -56,30 +66,20 @@ export default class OsscConnectionManager {
 		})
 	}
 
-	private async requestAsi(cookie: string): Promise<string> {
+	private static async getAsi(cookie: string): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const params = {
-				state: '0',
+				state: 'user',
 				type: '0',
-				category: 'menu.browser',
+				category: 'menu.browse',
 				startpage: 'portal.vm'
 			}
 
-			const requestOptions = {
-				hostname: this.host,
-				path: this.generatePath(params),
-				method: 'GET'
-			}
+			const requestOptions = this.generateGetRequestOptions(cookie, params)
 
 			// TODO: Check if I need to use axios `withCredentials: true`
 			const request = https.request(requestOptions, res => {
-				let body = ''
-
-				res.on('data', chunk => {
-					body += chunk
-				})
-
-				res.on('end', () => {
+				this.getBody(res).then(body => {
 					const regex = new RegExp('(?<=asi=)(\\w|\\.|\\$)*')
 					const asi = this.unwrap(body.match(regex)?.[0])
 
@@ -97,12 +97,230 @@ export default class OsscConnectionManager {
 		})
 	}
 
+	// TODO: Return Degree Name
+	/**
+	 * In order to access the grades webpage the degree id is required.
+	 */
+	private static async getDegreeId(cookie: string, asi: string): Promise<string> {
+		return new Promise((resolve, reject) => {
+			const params = {
+				state: 'notenspiegelStudent',
+				next: 'tree.vm',
+				nextdir: 'qispos/notenspiegel/student',
+				menuid: 'notenspiegelStudent',
+				breadcrumb: 'notenspiegel',
+				breadCrumbSource: 'menu',
+				asi: asi
+			}
+
+			const requestOptions = this.generateGetRequestOptions(cookie, params)
+
+			const request = https.request(requestOptions, res => {
+				this.getBody(res).then(body => {
+					const regex = new RegExp('(?<=Abschluss )(\\d+)')
+
+					// TODO: Handle mutliple degress
+					const degreeId = this.unwrap(body.match(regex)?.[0])
+					resolve(degreeId)
+				})
+			})
+
+			request.on('error', e => {
+				console.error(e.message)
+				reject(e)
+			})
+
+			request.end()
+		})
+	}
+
+	// Return Topic Name
+	private static async getRegulationAndTopicId(
+		cookie: string,
+		asi: string,
+		degreeId: string
+	): Promise<{ regulationId: string; topicId: string }> {
+		return new Promise((resolve, reject) => {
+			const params = {
+				state: 'notenspiegelStudent',
+				struct: 'auswahlBaum',
+				navigation: 'Y',
+				next: 'tree.vm',
+				nextdir: 'qispos/notenspiegel/student',
+				nodeID: `auswahlBaum|abschluss:abschl=${degreeId}`,
+				expand: 0,
+				menuid: 'notenspiegelStudent',
+				breadcrumb: 'notenspiegel',
+				breadCrumbSource: 'menu',
+				asi: asi
+			}
+
+			const requestOptions = this.generateGetRequestOptions(cookie, params)
+
+			const request = https.request(requestOptions, res => {
+				this.getBody(res).then(body => {
+					const topicRegex = new RegExp('(?<=stg%3D)(\\d+)')
+					const regulationRegex = new RegExp('(?<=pversion%3D)(\\d+)')
+
+					// TODO: Handle mutliple degress
+					const topcId = this.unwrap(body.match(topicRegex)?.[0])
+					const regulationId = this.unwrap(body.match(regulationRegex)?.[0])
+
+					resolve({ topicId: topcId, regulationId: regulationId })
+				})
+			})
+
+			request.on('error', e => {
+				console.error(e.message)
+				reject(e)
+			})
+
+			request.end()
+		})
+	}
+
+	private static async getGrades(
+		cookie: string,
+		asi: string,
+		degree: string,
+		topic: string,
+		regulation: string
+	): Promise<Table[]> {
+		return new Promise((resolve, reject) => {
+			const params = {
+				state: 'notenspiegelStudent',
+				next: 'list.vm',
+				nextdir: 'qispos/notenspiegel/student',
+				createInfos: 'Y',
+				struct: 'auswahlBaum',
+				nodeID: `auswahlBaum|abschluss:abschl=${degree}|studiengang:stg=${topic},pversion=${regulation}`,
+				asi
+			}
+
+			const requestOptions = this.generateGetRequestOptions(cookie, params)
+
+			const request = https.request(requestOptions, res => {
+				this.getBody(res).then(body => {
+					const tables = TableParser.parse(body)
+					resolve(tables)
+
+					// FIXME: Exclude from Production build
+					if (process.env.NODE_ENV !== 'development') {
+						if (!fs.existsSync('./tmp')) {
+							fs.mkdirSync('./tmp')
+						}
+
+						fs.writeFileSync('./tmp/grades.html', body)
+					}
+				})
+			})
+
+			request.on('error', e => {
+				console.error(e.message)
+				reject(e)
+			})
+
+			request.end()
+		})
+	}
+
+	/**
+	 * Logs out the user and invalidates the cookie.
+	 * @param cookie
+	 */
+	private static logout(cookie: string) {
+		return new Promise((resolve, reject) => {
+			const params = {
+				state: 'user',
+				type: '4',
+				category: 'auth.logout',
+				menuid: 'logout'
+			}
+
+			const requestOptions = this.generateGetRequestOptions(cookie, params)
+
+			const request = https.request(requestOptions)
+
+			request.on('error', e => {
+				console.error(e.message)
+				reject(e)
+			})
+
+			request.end()
+		})
+	}
+
+	public static async requestGrades(username: string, password: string) {
+		const start = Date.now()
+		let cookie: string | undefined
+
+		try {
+			console.log('Starting Grades Request for ' + username)
+
+			cookie = await this.getCookie(username, password)
+			this.userLog(username, 'Cookie: ' + cookie)
+
+			const asi = await this.getAsi(cookie)
+			this.userLog(username, 'asi: ' + asi)
+
+			const degreeId = await this.getDegreeId(cookie, asi)
+			this.userLog(username, 'degreeId: ' + degreeId)
+
+			const a = await this.getRegulationAndTopicId(cookie, asi, degreeId)
+			this.userLog(username, 'regregulationIdAndTopic' + JSON.stringify(a))
+
+			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
+
+			const result = new ModuleExtract(tables[1])
+
+			const duration = Date.now() - start
+			this.userLog(username, 'Duration: ' + duration + 'ms')
+
+			this.logout(cookie).then(() => {
+				this.userLog(username, 'Logged Out')
+			})
+
+			return Promise.resolve({
+				duration,
+				data: result
+			})
+		} catch (e) {
+			// In case the user has already been logged in when the error occurred. -> Logout
+			if (cookie) {
+				this.logout(cookie).then(() => {
+					this.userLog(username, 'Logged Out')
+				})
+			}
+
+			console.error(e)
+			this.userErrorLog(username, e)
+
+			return Promise.reject(e)
+		}
+	}
+
 	/**
 	 * Generates a string path using the passed query parameters
 	 * @param query Object of query parameters
 	 */
-	private generatePath(query: querystring.ParsedUrlQueryInput): string {
+	private static generatePath(query: querystring.ParsedUrlQueryInput): string {
 		return this.path + '?' + querystring.stringify(query)
+	}
+
+	/**
+	 * Generates all the options that are needed to make an http GET request to the server
+	 * @param cookie To authenticate a valid JSESSIONID Cookie has to be provided
+	 * @param params The query parameters that should be set on the url
+	 */
+	private static generateGetRequestOptions(cookie: string, params: querystring.ParsedUrlQueryInput) {
+		return {
+			hostname: this.host,
+			path: this.generatePath(params),
+			method: 'GET',
+			headers: {
+				Cookie: cookie
+			}
+		}
 	}
 
 	/**
@@ -110,11 +328,35 @@ export default class OsscConnectionManager {
 	 * https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
 	 * @param obj The object that should be unwrapped
 	 */
-	private unwrap<T>(obj: T | undefined): T {
+	private static unwrap<T>(obj: T | undefined): T {
 		if (obj) {
 			return obj
 		} else {
 			throw new Error('Object is null or undefined')
 		}
+	}
+
+	private static getBody(res: IncomingMessage): Promise<string> {
+		return new Promise((resolve, _) => {
+			let body = ''
+
+			res.setEncoding('utf8')
+
+			res.on('data', chunk => {
+				body += chunk
+			})
+
+			res.on('end', () => {
+				resolve(body)
+			})
+		})
+	}
+
+	private static userLog(user: string, message: string) {
+		console.log(colors.blue(`[${user}]`) + ': ' + message)
+	}
+
+	private static userErrorLog(user: string, error: Error) {
+		console.error(colors.red(`[${user}]`) + ': ' + colors.bgRed(error.message))
 	}
 }

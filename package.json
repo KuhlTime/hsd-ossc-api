@@ -14,19 +14,11 @@
 		"url": ""
 	},
 	"scripts": {
-		"build": "npm run build-ts && npm run lint",
-		"build-ts": "tsc",
-		"clean": "rimraf coverage dist tmp",
-		"debug": "npm run build",
-		"lint": "tsc --noEmit && eslint . --ext .js,.ts,.tsx --quiet --fix",
-		"lint:dev": "eslint . --ext .js,.ts,.tsx --fix",
-		"serve": "node dist/server.js",
-		"server-debug": "nodemon --inspect dist/server.js",
-		"start": "npm run serve",
-		"watch": "concurrently -k -p '[{name}]' -n 'YAML,TypeScript,Node' -c 'orange.bold,yellow.bold,cyan.bold' 'when-changed ' 'npm run watch-ts' 'npm run watch-node'",
-		"watch-debug": "concurrently -k -p '[{name}]' -n 'TypeScript,Node' -c 'yellow.bold,cyan.bold' 'npm run watch-ts' 'npm run serve-debug'",
-		"watch-node": "nodemon dist/server.js",
-		"watch-ts": "tsc -w"
+		"build": "tsc",
+		"dev": "tsc-watch --onSuccess 'node ./dist/server.js'",
+		"dev2": "concurrently -n 'Typescript,Node' -c 'blue.bold,green.bold' 'tsc -w' 'nodemon dist/server.js --delay 5'",
+		"start": "node dist/server.js",
+		"lint": "eslint"
 	},
 	"keywords": [
 		"hsd",
@@ -37,8 +29,10 @@
 	"devDependencies": {
 		"@tsconfig/node14": "^1.0.0",
 		"@types/basic-auth": "^1.1.3",
+		"@types/cheerio": "^0.22.22",
 		"@types/cors": "^2.8.7",
 		"@types/express": "^4.17.8",
+		"@types/lodash": "^4.14.161",
 		"@types/node": "^14.11.2",
 		"@types/swagger-stats": "^0.95.2",
 		"@types/swagger-ui-express": "^4.1.2",
@@ -53,13 +47,19 @@
 		"nodemon": "^2.0.4",
 		"prettier": "^2.1.2",
 		"rimraf": "^3.0.2",
+		"tsc-watch": "^4.2.9",
 		"typescript": "^4.0.3"
 	},
 	"dependencies": {
 		"basic-auth": "^2.0.1",
 		"body-parser": "^1.19.0",
+		"cheerio": "^1.0.0-rc.3",
+		"chrono-node": "^2.1.8",
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
+		"lodash": "^4.17.20",
+		"moment": "^2.29.0",
+		"momentjs": "^2.0.0",
 		"passport": "^0.4.1",
 		"passport-http": "^0.3.0",
 		"swagger-stats": "^0.95.17",

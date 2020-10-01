@@ -2,11 +2,12 @@
 // https://www.typescriptlang.org/docs/handbook/modules.html#wildcard-module-declarations
 // https://medium.com/@sampsonjoliver/importing-html-files-from-typescript-bd1c50909992
 
-declare module '*.yml'
+// https://stackoverflow.com/questions/39877156/how-to-extend-string-prototype-and-use-it-next-in-typescript
 
-declare module '*.json'
+interface Array<T> {
+	last(): T | undefined
+}
 
-declare module 'txt!*' {
-	const value: string
-	export = value
+interface String {
+	clean(): string
 }
