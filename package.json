@@ -16,7 +16,6 @@
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc-watch --onSuccess 'node ./dist/server.js'",
-		"dev2": "concurrently -n 'Typescript,Node' -c 'blue.bold,green.bold' 'tsc -w' 'nodemon dist/server.js --delay 5'",
 		"start": "node dist/server.js",
 		"lint": "eslint"
 	},
