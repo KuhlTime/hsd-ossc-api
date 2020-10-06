@@ -273,7 +273,6 @@ export default class OsscConnectionManager {
 			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
 
 			const student = new Student(tables[0])
-			console.log(student)
 			const result = new ModuleExtract(tables[1])
 
 			const duration = Date.now() - start
@@ -283,10 +282,11 @@ export default class OsscConnectionManager {
 				this.userLog(username, 'Logged Out')
 			})
 
+			// Response data
 			return Promise.resolve({
 				duration,
 				student,
-				data: result
+				modules: result.modules
 			})
 		} catch (e) {
 			// In case the user has already been logged in when the error occurred. -> Logout
