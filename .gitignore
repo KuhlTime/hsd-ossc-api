@@ -14,8 +14,8 @@ build/
 dist/
 
 # Temporary Files
-temp/
-tmp/
+temp
+tmp
 
 # VS Code
 .vscode
