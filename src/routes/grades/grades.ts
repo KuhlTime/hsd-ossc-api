@@ -9,7 +9,7 @@ const router = Router()
 router.get('/', (req: Request, res: Response) => {
 	const user = auth(req)
 
-	console.log('Recived request /grades')
+	console.log('Recived request /')
 
 	if (user?.name && user?.pass) {
 		OsscConnectionManager.requestGrades(user.name, user.pass)
