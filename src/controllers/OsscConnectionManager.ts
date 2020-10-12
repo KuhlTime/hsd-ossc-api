@@ -1,7 +1,7 @@
 import https from 'https'
 import { IncomingMessage } from 'http'
 import querystring from 'querystring'
-import { TableParser, Table } from '../controllers/TableParser'
+import { TableParser, Table } from '../utilities/TableParser'
 import fs from 'fs'
 import { ModuleExtract, Student } from '../models'
 import colors from 'colors'
@@ -40,8 +40,6 @@ export default class OsscConnectionManager {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
 			}
-
-			console.log(JSON.stringify(requestOptions))
 
 			const request = https.request(requestOptions, res => {
 				/**

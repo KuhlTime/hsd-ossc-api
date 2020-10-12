@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Table } from '../controllers/TableParser'
+import { Table } from '../utilities/TableParser'
 import { Module, Exam, WorkExperience } from './'
 
 export default class ModuleExtract {

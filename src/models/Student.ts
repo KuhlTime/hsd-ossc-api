@@ -1,4 +1,4 @@
-import { Table } from '../controllers/TableParser'
+import { Table } from '../utilities/TableParser'
 import moment from 'moment'
 
 export default class Stundent {
