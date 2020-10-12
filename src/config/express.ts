@@ -1,26 +1,29 @@
 import express from 'express'
 import cors from 'cors'
-import bodyParser from 'body-parser'
+import morgan from 'morgan'
+import helmet from 'helmet'
+
+import { morganFormat } from './env'
 
 // load router
-import swaggerRouter from './routes/swagger/swagger'
-import gradesRouter from './routes/grades/grades'
+import swaggerRouter from '../routes/swagger/swagger'
+import osscRouter from '../routes/ossc'
 
 // create server
 const app = express()
 
 // setup middlewares
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(cors())
+app.use(helmet())
+app.use(morgan(morganFormat))
 
 // use routers
 app.use(swaggerRouter)
-app.use(gradesRouter)
+app.use('/ossc', osscRouter)
 
 // setup routes
 app.get('/info', (req, res) => {
-	console.log('Recived Request')
 	res.send({
 		author: 'André Kuhlmann',
 		contact: 'akuhltime@gmail.com',

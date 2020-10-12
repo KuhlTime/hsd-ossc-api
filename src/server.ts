@@ -1,8 +1,9 @@
 import colors from 'colors'
-import app from './app'
+import app from './config/express'
 
-// start server
-const port = process.env.PORT || 3000
+import { port, env } from './config/env'
+
+// start the server
 
 const server = app.listen(port, () => {
 	console.log(colors.blue(`App is running at http://localhost:${port} in ${app.get('env')} mode`))

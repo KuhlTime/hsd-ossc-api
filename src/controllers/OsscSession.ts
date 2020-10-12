@@ -6,7 +6,7 @@ import fs from 'fs'
 import { ModuleExtract, Student } from '../models'
 import colors from 'colors'
 
-export default class OsscConnectionManager {
+export default class OsscSession {
 	static host = 'ossc.hs-duesseldorf.de'
 	static path = '/qisserver/rds'
 

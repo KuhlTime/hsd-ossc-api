@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express'
 import auth from 'basic-auth'
-import OsscConnectionManager from '../../controllers/OsscConnectionManager'
+import OsscSession from '../controllers/OsscSession'
 
 // setup router
 const router = Router()
@@ -9,14 +9,12 @@ const router = Router()
 router.get('/', (req: Request, res: Response) => {
 	const user = auth(req)
 
-	console.log('Recived request /')
-
 	if (user?.name && user?.pass) {
-		OsscConnectionManager.requestGrades(user.name, user.pass)
+		OsscSession.requestGrades(user.name, user.pass)
 			.then(data => res.send({ type: 'success', data: data }))
 			.catch(err => res.status(500).send({ type: 'error', message: err.message }))
 	} else {
-		res.status(401).send({ message: 'Unauthorized or invalid.' })
+		res.status(401).send({ type: 'error', message: 'Invalid username or password.' })
 	}
 })
 
