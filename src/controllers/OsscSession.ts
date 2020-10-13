@@ -270,7 +270,7 @@ export default class OsscSession {
 			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
 
 			const student = new Student(tables[0])
-			const result = new ModuleExtract(tables[1])
+			const extract = new ModuleExtract(tables[1])
 			this.userLog(username, 'Recieved and Parsed Results')
 
 			const duration = Date.now() - start
@@ -283,7 +283,9 @@ export default class OsscSession {
 			const response = classToPlain({
 				duration,
 				student,
-				modules: result.modules
+				totalCreditPoints: extract.totalCreditPoints,
+				avgGrade: extract.avgGrade,
+				modules: extract.modules
 			})
 
 			// Response data
