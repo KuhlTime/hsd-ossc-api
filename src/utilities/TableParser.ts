@@ -20,7 +20,7 @@ class TableParser {
 		const $ = cheerio.load(body)
 		const $tables = $('table')
 
-		console.log('Found: ' + $tables.length + ' tables')
+		// console.log('Found: ' + $tables.length + ' tables')
 
 		/**
 		 * The array of table data objects that get returned by the function
@@ -78,7 +78,8 @@ class TableParser {
 					/**
 					 * Unsupported table format
 					 */
-					console.log('Unsupported Row Format: ' + $row.text())
+					// console.log('Unsupported Row Format: ' + $row.text())
+					throw Error('Detected unsupported Row Format')
 				}
 
 				// Only append row if there is actually a content to be added

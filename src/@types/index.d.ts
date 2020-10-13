@@ -6,6 +6,7 @@
 
 interface Array<T> {
 	last(): T | undefined
+	first(): T | undefined
 	merge(): Record<string, unknown>
 }
 

@@ -16,7 +16,7 @@ export default class ModuleExtract {
 			return row['PNr.'].length === 5
 		})
 
-		console.log(moduleRows)
+		// console.log(moduleRows)
 
 		for (let i = 0; i < moduleRows.length; i++) {
 			const row = moduleRows[i]

@@ -5,6 +5,7 @@ import { TableParser, Table } from '../utilities/TableParser'
 import fs from 'fs'
 import { ModuleExtract, Student } from '../models'
 import colors from 'colors'
+import { classToPlain } from 'class-transformer'
 
 export default class OsscSession {
 	static host = 'ossc.hs-duesseldorf.de'
@@ -254,38 +255,39 @@ export default class OsscSession {
 		let cookie: string | undefined
 
 		try {
-			console.log('Starting Grades Request for ' + username)
-
 			cookie = await this.getCookie(username, password)
-			this.userLog(username, 'Cookie: ' + cookie)
+			this.userLog(username, 'Recived Cookie')
 
 			const asi = await this.getAsi(cookie)
-			this.userLog(username, 'asi: ' + asi)
+			this.userLog(username, 'Recieved ASI')
 
 			const degreeId = await this.getDegreeId(cookie, asi)
-			this.userLog(username, 'degreeId: ' + degreeId)
+			this.userLog(username, 'Recived Degree ID')
 
 			const a = await this.getRegulationAndTopicId(cookie, asi, degreeId)
-			this.userLog(username, 'regregulationIdAndTopic' + JSON.stringify(a))
+			this.userLog(username, 'Recieved Regulation and Topic ID')
 
 			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
 
 			const student = new Student(tables[0])
 			const result = new ModuleExtract(tables[1])
+			this.userLog(username, 'Recieved and Parsed Results')
 
 			const duration = Date.now() - start
-			this.userLog(username, 'Duration: ' + duration + 'ms')
+			// this.userLog(username, 'Request duration: ' + duration + 'ms')
 
 			this.logout(cookie).then(() => {
 				this.userLog(username, 'Logged Out')
 			})
 
-			// Response data
-			return Promise.resolve({
+			const response = classToPlain({
 				duration,
 				student,
 				modules: result.modules
 			})
+
+			// Response data
+			return Promise.resolve(response)
 		} catch (e) {
 			// In case the user has already been logged in when the error occurred. -> Logout
 			if (cookie) {

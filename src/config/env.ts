@@ -11,5 +11,6 @@ const port = process.env.PORT
 const logLevel = process.env.LOG_LEVEL || env === 'production' ? 'info' : 'debug'
 const morganFormat = env === 'production' ? 'short' : 'dev'
 const sentryDsn = process.env.SENTRY_DSN
+const logRocketKey = process.env.LOG_ROCKET_KEY
 
-export { env, port, logLevel, sentryDsn, morganFormat }
+export { env, port, logLevel, sentryDsn, morganFormat, logRocketKey }

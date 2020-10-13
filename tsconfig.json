@@ -11,11 +11,12 @@
 
 		"esModuleInterop": true, // Fixes an issue with the import statement
 		"allowSyntheticDefaultImports": true, // When enabled imports can be written as such: import express from 'express'
-		"noImplicitAny": true, // In cases where the value type is not declared and can't be inferred noImplicitAny outputs an error
+		"noImplicitAny": false, // In cases where the value type is not declared and can't be inferred noImplicitAny outputs an error
 		"moduleResolution": "node",
 		"sourceMap": true, // Enables the generation of a source map files. A source map allows the debugger to display the original origin of a file
 		"strict": true, // ?
 		"resolveJsonModule": true, // Resolves JSON files
+		"experimentalDecorators": true,
 
 		"paths": {
 			"@/*": [

@@ -1,4 +1,5 @@
 import { WorkExperience, Exam } from '.'
+import { Expose } from 'class-transformer'
 
 export default class Module {
 	id: number
@@ -7,12 +8,16 @@ export default class Module {
 	creditPoints: number
 	exams: Exam[] = []
 	workExperiences: WorkExperience[] = []
+	grade: number | undefined
 
 	constructor(row: Record<string, string>) {
 		this.id = parseInt(row['PNr.'])
 		this.name = row['Prüfung']
 		this.passed = row['Status'] === 'bestanden'
 		this.creditPoints = parseInt(row['Bonus'])
+
+		const grade = parseFloat(row['Note'])
+		this.grade = isNaN(grade) ? undefined : grade
 	}
 
 	add(item: Exam | WorkExperience) {
@@ -25,6 +30,14 @@ export default class Module {
 				break
 			default:
 				console.error('Unknown type to add to module!')
+		}
+	}
+
+	@Expose()
+	get attempts(): { exams: number; workExperiences: number } {
+		return {
+			exams: this.exams.length,
+			workExperiences: this.workExperiences.length
 		}
 	}
 }
