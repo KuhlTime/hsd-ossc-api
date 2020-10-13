@@ -4,8 +4,6 @@ import morgan from 'morgan'
 import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing'
 
-import { sentryDsn } from './env'
-
 import './logrocket'
 
 import { morganFormat } from './env'
@@ -18,7 +16,7 @@ import osscRouter from '../routes/ossc'
 const app = express()
 
 Sentry.init({
-	dsn: sentryDsn,
+	dsn: 'https://ee9006d7bee240f6b5da0669aabf2819@o459771.ingest.sentry.io/5461979',
 	integrations: [
 		// enable HTTP calls tracing
 		new Sentry.Integrations.Http({ tracing: true }),
