@@ -6,7 +6,7 @@ import OsscSession from '../controllers/OsscSession'
 const router = Router()
 
 // set routes
-router.get('/', (req: Request, res: Response) => {
+router.get('/modules', (req: Request, res: Response) => {
 	const user = auth(req)
 
 	if (user?.name && user?.pass) {

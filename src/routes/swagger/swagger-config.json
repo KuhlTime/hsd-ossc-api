@@ -13,7 +13,7 @@
 			"url": "https://www.apache.org/licenses/LICENSE-2.0.html"
 		}
 	},
-	"host": "http://localhost:3000",
+	"host": "https://ap.kuhlti.me",
 	"basePath": "/",
 	"tags": [
 		{

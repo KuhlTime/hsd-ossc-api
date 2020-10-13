@@ -41,7 +41,7 @@ app.use(cors())
 app.use(morgan(morganFormat))
 
 // use routers
-app.use(swaggerRouter)
+// app.use(swaggerRouter)
 app.use('/ossc', osscRouter)
 
 // setup routes
