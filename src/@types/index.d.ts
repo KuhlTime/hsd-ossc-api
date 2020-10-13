@@ -8,6 +8,8 @@ interface Array<T> {
 	last(): T | undefined
 	first(): T | undefined
 	merge(): Record<string, unknown>
+	sum(this: Array<number>): number
+	avg(this: Array<number>): number | undefined
 }
 
 interface String {

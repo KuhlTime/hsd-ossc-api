@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { Table } from '../utilities/TableParser'
 import { Module, Exam, WorkExperience } from './'
+import { Expose } from 'class-transformer'
 
 export default class ModuleExtract {
 	modules: Module[] = []
@@ -52,5 +53,20 @@ export default class ModuleExtract {
 				this.modules.push(module)
 			}
 		}
+	}
+
+	private get gradesArray(): number[] {
+		const a = this.modules.filter(module => module.grade !== undefined).map(module => module.grade) as number[]
+		return a
+	}
+
+	@Expose()
+	get totalCreditPoints(): number {
+		return this.modules.map(module => module.creditPoints).sum()
+	}
+
+	@Expose()
+	get avgGrade(): number | undefined {
+		return this.gradesArray.avg()
 	}
 }
