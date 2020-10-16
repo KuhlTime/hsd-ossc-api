@@ -2,6 +2,8 @@ import { Router, Request, Response } from 'express'
 import auth from 'basic-auth'
 import OsscSession from '../controllers/OsscSession'
 
+import exampleResponse from './example.json'
+
 // setup router
 const router = Router()
 
@@ -16,6 +18,10 @@ router.get('/modules', (req: Request, res: Response) => {
 	} else {
 		res.status(401).send({ type: 'error', message: 'Invalid username or password.' })
 	}
+})
+
+router.get('/test', (req: Request, res: Response) => {
+	res.send(exampleResponse)
 })
 
 // export

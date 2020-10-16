@@ -1,0 +1,47 @@
+{
+  "type": "success",
+  "data": {
+    "duration": -1,
+    "student": {
+      "name": "Max Mustermann",
+      "registration": 779690,
+      "birthday": "1971-01-01T00:00:00.000Z",
+      "cityOfBirth": "Düsseldorf",
+      "degree": "Bachelor",
+      "faculty": "Elektro- und Informationstechnik",
+      "address": "Mond 45"
+    },
+    "totalCreditPoints": 10,
+    "avgGrade": 3.1,
+    "modules": [
+      {
+        "exams": [
+          {
+            "grade": 3.1,
+            "passed": true,
+            "examinationDate": "2018-02-06T00:00:00.000Z"
+          }
+        ],
+        "workExperiences": [
+          {
+            "semester": "WS 17/18",
+            "passed": false
+          },
+          {
+            "semester": "WS 18/19",
+            "passed": true
+          }
+        ],
+        "id": 11010,
+        "name": "G 1 Grundlagen der Elektrotechnik I",
+        "passed": true,
+        "creditPoints": 10,
+        "grade": 3.1,
+        "attempts": {
+          "exams": 1,
+          "workExperiences": 2
+        }
+      }
+    ]
+  }
+}
