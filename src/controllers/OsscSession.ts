@@ -1,3 +1,6 @@
+// NOTE: 👻 Checkout proxy rotation
+// NOTE: Checkout APIFY - https://docs.apify.com/web-scraping-101/anti-scraping-techniques#ip-address-based-blocking
+
 import https from 'https'
 import { IncomingMessage } from 'http'
 import querystring from 'querystring'
@@ -202,15 +205,6 @@ export default class OsscSession {
 				this.getBody(res).then(body => {
 					const tables = TableParser.parse(body)
 					resolve(tables)
-
-					// FIXME: Exclude from Production build
-					if (process.env.NODE_ENV !== 'development') {
-						if (!fs.existsSync('./tmp')) {
-							fs.mkdirSync('./tmp')
-						}
-
-						fs.writeFileSync('./tmp/grades.html', body)
-					}
 				})
 			})
 
