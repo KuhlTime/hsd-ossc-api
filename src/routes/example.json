@@ -1,52 +1,52 @@
 {
-  "type": "success",
-  "data": {
-    "duration": -1,
-    "student": {
-      "name": "Max Mustermann",
-      "registration": 111111,
-      "birthday": "1971-01-01T00:00:00.000Z",
-      "cityOfBirth": "Düsseldorf",
-      "degree": "Bachelor",
-      "faculty": "Elektro- und Informationstechnik",
-      "address": "Mond 45"
-    },
-    "totalCreditPoints": 10,
-    "avgGrade": 3.1,
-    "modules": [
-      {
-        "exams": [
-          {
-            "grade": 1.4,
-            "passed": true,
-            "examinationDate": "2020-10-16T00:00:00.000Z"
+	"type": "success",
+	"data": {
+		"duration": -1,
+		"student": {
+			"name": "Max Mustermann",
+			"registration": 111111,
+			"birthday": "1971-01-01T00:00:00.000Z",
+			"cityOfBirth": "Düsseldorf",
+			"degree": "Bachelor",
+			"faculty": "Elektro- und Informationstechnik",
+			"address": "Mond 45"
+		},
+		"totalCreditPoints": 10,
+		"avgGrade": 1.4,
+		"modules": [
+			{
+				"exams": [
+					{
+						"grade": 1.4,
+						"passed": true,
+						"examinationDate": "2020-10-16T00:00:00.000Z"
 					},
 					{
-            "grade": 5.0,
-            "passed": true,
-            "examinationDate": "2020-2-4T00:00:00.000Z"
+						"grade": 5.0,
+						"passed": true,
+						"examinationDate": "2020-2-4T00:00:00.000Z"
 					}
-        ],
-        "workExperiences": [
-          {
-            "semester": "WS 19/20",
-            "passed": false
-          },
-          {
-            "semester": "SS 20",
-            "passed": true
-          }
-        ],
-        "id": 10000,
-        "name": "Test Modul",
-        "passed": true,
-        "creditPoints": 10,
-        "grade": 1.4,
-        "attempts": {
-          "exams": 2,
-          "workExperiences": 2
-        }
-      }
-    ]
-  }
+				],
+				"workExperiences": [
+					{
+						"semester": "WS 19/20",
+						"passed": false
+					},
+					{
+						"semester": "SS 20",
+						"passed": true
+					}
+				],
+				"id": 10000,
+				"name": "Test Modul",
+				"passed": true,
+				"creditPoints": 10,
+				"grade": 1.4,
+				"attempts": {
+					"exams": 2,
+					"workExperiences": 2
+				}
+			}
+		]
+	}
 }
