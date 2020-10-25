@@ -1,8 +1,10 @@
 import * as admin from 'firebase-admin'
+import { firebaseServiceAccount } from './env'
 import { Module, Score } from '../models'
 import { plainToClass, classToPlain } from 'class-transformer'
 
 const app = admin.initializeApp({
+	credential: admin.credential.cert(firebaseServiceAccount),
 	databaseURL: 'https://node-ossc-1.firebaseio.com'
 } as admin.AppOptions)
 
