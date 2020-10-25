@@ -13,6 +13,7 @@ import { ModuleExtract, Student, Score, Module } from '../models'
 import colors from 'colors'
 import { classToPlain } from 'class-transformer'
 import axios from 'axios'
+import { storeScore, fetchScoresForModule } from '../config/firebase'
 
 export default class OsscSession {
 	static host = 'ossc.hs-duesseldorf.de'
@@ -275,15 +276,27 @@ export default class OsscSession {
 		})
 	}
 
+	/**
+	 *
+	 * @param extract
+	 * @param cookie
+	 */
 	private static async getAllScores(extract: ModuleExtract, cookie) {
 		for (let m = 0; m < extract.modules.length; m++) {
 			const module = extract.modules[m]
 
+			// Tries to find the scores inside the firebase db
+			await fetchScoresForModule(module)
+
 			for (let e = 0; e < module.exams.length; e++) {
 				const exam = module.exams[e]
 
-				if (exam.scoreLink !== undefined && cookie !== undefined) {
+				// If there are any scores that have not been store on firebase.
+				// Crawl them and store them to firebase
+				if (exam.score === undefined && exam.scoreLink !== undefined && cookie !== undefined) {
+					console.log('No score found')
 					exam.score = await this.getScore(exam.scoreLink, cookie)
+					storeScore(exam.score)
 				}
 			}
 		}

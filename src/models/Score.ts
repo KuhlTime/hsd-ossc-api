@@ -1,14 +1,17 @@
 import { Table, TableParser } from '../utilities/TableParser'
 import { Expose, Exclude } from 'class-transformer'
 import Exam from './Exam'
+import Semester from './Semester'
 import moment from 'moment'
 
 export default class Score {
-	@Exclude() id: number
-	@Exclude() name: string
+	id: number
+	name: string
+	semester: Semester
 	grades: number[] = []
 	avarage = 0
-	@Exclude() examinationDate: Date | undefined
+	examinationDate: Date | undefined
+	updated: Date
 
 	constructor(body: string) {
 		const tables = TableParser.parse(body)
@@ -17,10 +20,14 @@ export default class Score {
 		const scoreTable = tables[2]
 
 		// set id
-		this.id = parseInt(moduleTable.rows[0]['PNr.'].value)
+		// FIXME: Assuming that the module id is always one less then the exam id
+		this.id = parseInt(moduleTable.rows[0]['PNr.'].value) - 1
 
 		// set name
 		this.name = moduleTable.rows[0]['Prüfung'].value
+
+		// set semester
+		this.semester = new Semester(moduleTable.rows[0]['Semester'].value)
 
 		// set date
 		this.examinationDate = moment(moduleTable.rows[0]['Prüfungsdatum'].value, 'DD.MM.YYYY').utc().toDate()
@@ -33,6 +40,9 @@ export default class Score {
 
 		// Set avarage grade
 		this.avarage = parseFloat(scoreTable.rows[9].undefined.value)
+
+		// set updated date
+		this.updated = new Date()
 	}
 
 	@Expose()

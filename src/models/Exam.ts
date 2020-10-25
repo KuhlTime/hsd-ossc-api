@@ -1,11 +1,12 @@
 import moment from 'moment'
 import Score from './Score'
+import Semester from './Semester'
 import { Exclude, Expose } from 'class-transformer'
 import { TableCell } from '../utilities/TableParser'
 import url from 'url'
 
 export default class Exam {
-	semester: string
+	semester: Semester
 	grade: number
 	passed: boolean
 	examinationDate: Date | undefined
@@ -15,7 +16,7 @@ export default class Exam {
 	scoreLink: URL | undefined
 
 	constructor(row: Record<string, TableCell>) {
-		this.semester = row['Semester'].value
+		this.semester = new Semester(row['Semester'].value)
 		this.grade = parseFloat(row['Note'].value.replace(',', '.'))
 		this.passed = row['Status'].value === 'bestanden'
 		this.examinationDate = moment(row['Prüfungsdatum'].value, 'DD.MM.YYYY').utc().toDate()
