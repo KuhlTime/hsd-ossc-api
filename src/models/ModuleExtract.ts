@@ -14,25 +14,25 @@ export default class ModuleExtract {
 		 * digits long and divisable by 10.
 		 */
 		const moduleRows = table.rows.filter(row => {
-			return row['PNr.'].length === 5
+			return row['PNr.'].value.length === 5
 		})
 
 		// console.log(moduleRows)
 
 		for (let i = 0; i < moduleRows.length; i++) {
 			const row = moduleRows[i]
-			const id = parseInt(row['PNr.'])
+			const id = parseInt(row['PNr.'].value)
 
-			if (row['PNr.'].length === 5 && id % 10 === 0) {
+			if (row['PNr.'].value.length === 5 && id % 10 === 0) {
 				// Module Header Row
 				const module = new Module(row)
 
 				// Exam: XXXX1
 				// Work Experience: XXXX2
-				while (i + 1 < moduleRows.length && parseInt(moduleRows[i + 1]['PNr.']) - id < 9) {
+				while (i + 1 < moduleRows.length && parseInt(moduleRows[i + 1]['PNr.'].value) - id < 9) {
 					const nextRow = moduleRows[i + 1]
 
-					switch (parseInt(moduleRows[i + 1]['PNr.']) - id) {
+					switch (parseInt(moduleRows[i + 1]['PNr.'].value) - id) {
 						case 1:
 							// EXAM
 							const exam = new Exam(nextRow)
@@ -68,5 +68,13 @@ export default class ModuleExtract {
 	@Expose()
 	get avgGrade(): number | undefined {
 		return this.gradesArray.avg()
+	}
+
+	forExam = (callback: (exam: Exam) => void) => {
+		this.modules.forEach(module => {
+			module.exams.forEach(exam => {
+				callback(exam)
+			})
+		})
 	}
 }

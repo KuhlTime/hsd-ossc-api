@@ -4,10 +4,25 @@ import '../@types/StringExtensions'
 
 class Table {
 	headers: Array<string> = []
-	rows: Array<Record<string, string>> = []
+	rows: Array<Record<string, TableCell>> = []
+
+	/**
+	 * Links are only supported for vertical tables for now.
+	 */
+	links: Array<Record<string, string | undefined>> = []
 
 	length(): number {
 		return this.rows.length
+	}
+}
+
+class TableCell {
+	value: string
+	link: string | undefined
+
+	constructor(value: string, link: string | undefined) {
+		this.value = value
+		this.link = link
 	}
 }
 
@@ -49,7 +64,7 @@ class TableParser {
 				/**
 				 * An object with each value assigned to its header key
 				 */
-				const rowData: Record<string, string> = {}
+				const rowData: Record<string, TableCell> = {}
 
 				// when both th and td are in the same row it can be assumed the table is horizontal
 				if ($headerCells.length !== 0 && $cells.length !== 0) {
@@ -58,7 +73,11 @@ class TableParser {
 					 * where the table head is in the same row as the value
 					 */
 					const key: string = tableData.headers.last() || ''
-					rowData[key] = $cells.first().text().clean()
+					const value: string = $cells.first().text().clean()
+
+					const href = $cells.first().find('a').attr('href')
+
+					rowData[key] = new TableCell(value, href)
 
 					isHorizontal = true
 				} else if ($headerCells.length === 0) {
@@ -71,7 +90,9 @@ class TableParser {
 						const key: string = tableData.headers[i]
 						const value = $(cell).text().clean()
 
-						rowData[key] = value
+						const href = $(cell).find('a').attr('href')
+
+						rowData[key] = new TableCell(value, href)
 					})
 				} else if ($headerCells.length !== 0) {
 				} else {
@@ -89,7 +110,7 @@ class TableParser {
 			})
 
 			if (isHorizontal) {
-				tableData.rows = [tableData.rows.merge() as Record<string, string>]
+				tableData.rows = [tableData.rows.merge() as Record<string, TableCell>]
 			}
 
 			tables.push(tableData)
@@ -99,4 +120,4 @@ class TableParser {
 	}
 }
 
-export { TableParser, Table }
+export { TableParser, TableCell, Table }

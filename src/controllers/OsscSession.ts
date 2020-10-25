@@ -1,14 +1,18 @@
 // NOTE: 👻 Checkout proxy rotation
 // NOTE: Checkout APIFY - https://docs.apify.com/web-scraping-101/anti-scraping-techniques#ip-address-based-blocking
+// TODO: Cleanup request and make them more reusable
+// TODO: Capture degree, regulation, topic in object
 
 import https from 'https'
+import { URL } from 'url'
 import { IncomingMessage } from 'http'
 import querystring from 'querystring'
 import { TableParser, Table } from '../utilities/TableParser'
 import fs from 'fs'
-import { ModuleExtract, Student } from '../models'
+import { ModuleExtract, Student, Score, Module } from '../models'
 import colors from 'colors'
 import { classToPlain } from 'class-transformer'
+import axios from 'axios'
 
 export default class OsscSession {
 	static host = 'ossc.hs-duesseldorf.de'
@@ -217,6 +221,33 @@ export default class OsscSession {
 		})
 	}
 
+	private static async getScore(url: URL, cookie: string): Promise<Score> {
+		return new Promise((resolve, reject) => {
+			const requestOptions = {
+				hostname: this.host,
+				path: this.path + url.search,
+				method: 'GET',
+				headers: {
+					Cookie: cookie
+				}
+			}
+
+			const request = https.request(requestOptions, res => {
+				this.getBody(res).then(body => {
+					const score = new Score(body)
+					resolve(score)
+				})
+			})
+
+			request.on('error', e => {
+				console.error(e.message)
+				reject(e)
+			})
+
+			request.end()
+		})
+	}
+
 	/**
 	 * Logs out the user and invalidates the cookie.
 	 * @param cookie
@@ -244,6 +275,20 @@ export default class OsscSession {
 		})
 	}
 
+	private static async getAllScores(extract: ModuleExtract, cookie) {
+		for (let m = 0; m < extract.modules.length; m++) {
+			const module = extract.modules[m]
+
+			for (let e = 0; e < module.exams.length; e++) {
+				const exam = module.exams[e]
+
+				if (exam.scoreLink !== undefined && cookie !== undefined) {
+					exam.score = await this.getScore(exam.scoreLink, cookie)
+				}
+			}
+		}
+	}
+
 	public static async requestGrades(username: string, password: string) {
 		const start = Date.now()
 		let cookie: string | undefined
@@ -266,6 +311,8 @@ export default class OsscSession {
 			const student = new Student(tables[0])
 			const extract = new ModuleExtract(tables[1])
 			this.userLog(username, 'Recieved and Parsed Results')
+
+			await this.getAllScores(extract, cookie)
 
 			const duration = Date.now() - start
 			// this.userLog(username, 'Request duration: ' + duration + 'ms')

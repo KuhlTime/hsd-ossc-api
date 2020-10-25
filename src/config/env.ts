@@ -13,4 +13,14 @@ const morganFormat = env === 'production' ? 'short' : 'dev'
 const sentryDsn = process.env.SENTRY_DSN
 const logRocketKey = process.env.LOG_ROCKET_KEY
 
-export { env, port, logLevel, sentryDsn, morganFormat, logRocketKey }
+if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
+	Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('ascii')
+} else {
+	throw new Error('Could not find FIREBASE_SERVICE_ACCOUNT_BASE64 enviorment variable')
+}
+
+const firebaseServiceAccount = JSON.parse(
+	Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('ascii')
+)
+
+export { env, port, logLevel, sentryDsn, morganFormat, logRocketKey, firebaseServiceAccount }

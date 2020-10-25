@@ -1,5 +1,6 @@
 import { WorkExperience, Exam } from '.'
 import { Expose } from 'class-transformer'
+import { TableCell } from '../utilities/TableParser'
 
 export default class Module {
 	id: number
@@ -10,13 +11,13 @@ export default class Module {
 	workExperiences: WorkExperience[] = []
 	grade: number | undefined
 
-	constructor(row: Record<string, string>) {
-		this.id = parseInt(row['PNr.'])
-		this.name = row['Prüfung']
-		this.passed = row['Status'] === 'bestanden'
-		this.creditPoints = parseInt(row['Bonus'])
+	constructor(row: Record<string, TableCell>) {
+		this.id = parseInt(row['PNr.'].value)
+		this.name = row['Prüfung'].value
+		this.passed = row['Status'].value === 'bestanden'
+		this.creditPoints = parseInt(row['Bonus'].value)
 
-		const grade = parseFloat(row['Note'])
+		const grade = parseFloat(row['Note'].value)
 		this.grade = isNaN(grade) ? undefined : grade
 	}
 

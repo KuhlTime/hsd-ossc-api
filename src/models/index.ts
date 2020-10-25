@@ -1,10 +1,10 @@
 import Class from './Class'
 import Exam from './Exam'
-import ExamScore from './ExamScore'
 import Module from './Module'
 import ModuleExtract from './ModuleExtract'
 import Semester from './Semester'
 import Student from './Student'
 import WorkExperience from './WorkExperience'
+import Score from './Score'
 
-export { Class, Exam, ExamScore, Module, ModuleExtract, Semester, Student, WorkExperience }
+export { Class, Exam, Module, ModuleExtract, Semester, Student, WorkExperience, Score }

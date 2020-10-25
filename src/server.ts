@@ -1,5 +1,6 @@
 import colors from 'colors'
 import app from './config/express'
+import './config/firebase'
 
 import { port, env } from './config/env'
 

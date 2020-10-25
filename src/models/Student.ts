@@ -13,14 +13,14 @@ export default class Stundent {
 	constructor(table: Table) {
 		const row = table.rows[0]
 
-		this.name = row['Name des Studierenden']
-		this.registration = parseInt(row['Matrikelnummer'])
-		this.birthday = moment(row['Geburtsdatum und -ort'].match(/\d+.\d+.\d+/)?.[0], 'DD.MM.YYYY')
+		this.name = row['Name des Studierenden'].value
+		this.registration = parseInt(row['Matrikelnummer'].value)
+		this.birthday = moment(row['Geburtsdatum und -ort'].value.match(/\d+.\d+.\d+/)?.[0], 'DD.MM.YYYY')
 			.utc()
 			.toDate()
-		this.cityOfBirth = row['Geburtsdatum und -ort'].match(/(?<=in )\w+/)?.[0]
-		this.degree = row['(angestrebter) Abschluss']
-		this.faculty = row['Fach']
-		this.address = row['Anschrift']
+		this.cityOfBirth = row['Geburtsdatum und -ort'].value.match(/(?<=in )\w+/)?.[0]
+		this.degree = row['(angestrebter) Abschluss'].value
+		this.faculty = row['Fach'].value
+		this.address = row['Anschrift'].value
 	}
 }
