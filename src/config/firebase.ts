@@ -26,7 +26,13 @@ async function fetchScoresForModule(module: Module) {
 		const doc = snapshot.docs[0]
 
 		if (doc !== undefined) {
-			exam.score = doc.data() as Score
+			const score = doc.data() as Score
+
+			// Convert firebase timestamp to js date format
+			score.examinationDate = doc.data().examinationDate.toDate()
+			score.updated = doc.data().updated.toDate()
+
+			exam.score = score
 		}
 	}
 }
