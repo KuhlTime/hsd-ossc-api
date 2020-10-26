@@ -17,33 +17,49 @@
 			{
 				"exams": [
 					{
+						"semester": {
+							"winter": true,
+							"year": 17
+						},
 						"grade": 1.4,
 						"passed": true,
-						"examinationDate": "2020-10-16T00:00:00.000Z"
-					},
-					{
-						"grade": 5.0,
-						"passed": true,
-						"examinationDate": "2020-2-4T00:00:00.000Z"
+						"examinationDate": "2018-02-05T23:00:00.000Z",
+						"score": {
+							"grades": [15, 18, 21, 5, 16],
+							"id": 11010,
+							"semester": {
+								"year": 17,
+								"winter": true
+							},
+							"updated": "2020-10-25T16:57:39.812Z",
+							"examinationDate": "2018-02-05T23:00:00.000Z",
+							"attendes": {
+								"failed": 5,
+								"passed": 70,
+								"total": 75
+							},
+							"name": "Grundlagen der Elektrotechnik I",
+							"avarage": 3
+						}
 					}
 				],
 				"workExperiences": [
 					{
-						"semester": "WS 19/20",
+						"semester": "WS 17/18",
 						"passed": false
 					},
 					{
-						"semester": "SS 20",
+						"semester": "WS 18/19",
 						"passed": true
 					}
 				],
-				"id": 10000,
-				"name": "Test Modul",
+				"id": 11010,
+				"name": "G 1 Grundlagen der Elektrotechnik I",
 				"passed": true,
 				"creditPoints": 10,
 				"grade": 1.4,
 				"attempts": {
-					"exams": 2,
+					"exams": 1,
 					"workExperiences": 2
 				}
 			}
