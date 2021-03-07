@@ -9,7 +9,6 @@ import './logrocket'
 import { morganFormat } from './env'
 
 // load router
-import swaggerRouter from '../routes/swagger/swagger'
 import osscRouter from '../routes/ossc'
 
 // create server
