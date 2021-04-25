@@ -8,11 +8,9 @@ import { URL } from 'url'
 import { IncomingMessage } from 'http'
 import querystring from 'querystring'
 import { TableParser, Table } from '../utilities/TableParser'
-import fs from 'fs'
-import { ModuleExtract, Student, Score, Module } from '../models'
+import { ModuleExtract, Student, Score } from '../models'
 import colors from 'colors'
 import { classToPlain } from 'class-transformer'
-import axios from 'axios'
 import { storeScore, fetchScoresForModule } from '../config/firebase'
 
 export default class OsscSession {
