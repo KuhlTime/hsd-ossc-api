@@ -1,4 +1,11 @@
-# Resources
+# node-ossc
+
+## 🛣 Concept
+
+Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
+![Request Flowchart](assets/request-flow.png)
+
+## 🌍 Resources
 
 - **[Using ESLint and Prettier in a TypeScript Project](https://www.robertcooper.me/using-eslint-and-prettier-in-a-typescript-project)**:
 
