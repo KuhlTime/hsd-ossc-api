@@ -254,7 +254,7 @@ export default class OsscSession {
 	 * @param cookie
 	 */
 	private static logout(cookie: string) {
-		return new Promise((resolve, reject) => {
+		return new Promise<void>((resolve, reject) => {
 			const params = {
 				state: 'user',
 				type: '4',
