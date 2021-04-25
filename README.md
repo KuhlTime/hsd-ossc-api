@@ -1,5 +1,7 @@
 # node-ossc
 
+This is a API Server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store non user related information about the exams, scraped from the website.
+
 ## 🛣 Concept
 
 Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
