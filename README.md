@@ -37,11 +37,11 @@ Here you can see a flow diagram on how to retrive the students grades and the sc
 
   - `tsconfig.json`: Used to configure the typescript compiler
 
-- [CLI apps in TypeScript via ts-node](https://www.geekytidbits.com/cli-apps-in-typescript-via-ts-node/)
+- **[CLI apps in TypeScript via ts-node](https://www.geekytidbits.com/cli-apps-in-typescript-via-ts-node/)**
 
   - `ts-node`: The ts-node executable allows you to run your typescript code directly from within your terminal, without the need to use the typescript compiler `tsc`.
 
-- [TypeScript-Node-Starter](https://github.com/microsoft/TypeScript-Node-Starter)
+- **[TypeScript-Node-Starter](https://github.com/microsoft/TypeScript-Node-Starter)**
   - I have used this boilerplate to setup all the scripts necessary to run the server.
 
 ## 👨‍⚖️ Disclaimer
