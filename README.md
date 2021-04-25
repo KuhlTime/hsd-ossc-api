@@ -43,3 +43,7 @@ Here you can see a flow diagram on how to retrive the students grades and the sc
 
 - [TypeScript-Node-Starter](https://github.com/microsoft/TypeScript-Node-Starter)
   - I have used this boilerplate to setup all the scripts necessary to run the server.
+
+## 👨‍⚖️ Disclaimer
+
+I will not take any responsibility for any malfunctions or consequences that may arrise from using this tool.
