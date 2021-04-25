@@ -39,7 +39,6 @@
 		"express": "^4.17.1",
 		"firebase-admin": "^9.2.0",
 		"lodash": "^4.17.20",
-		"logrocket": "^1.0.14",
 		"moment": "^2.29.0",
 		"morgan": "^1.10.0"
 	},

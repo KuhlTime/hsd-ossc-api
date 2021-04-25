@@ -11,7 +11,6 @@ const port = process.env.PORT
 const logLevel = process.env.LOG_LEVEL || env === 'production' ? 'info' : 'debug'
 const morganFormat = env === 'production' ? 'short' : 'dev'
 const sentryDsn = process.env.SENTRY_DSN
-const logRocketKey = process.env.LOG_ROCKET_KEY
 
 if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
 	Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('ascii')
@@ -23,4 +22,4 @@ const firebaseServiceAccount = JSON.parse(
 	Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('ascii')
 )
 
-export { env, port, logLevel, sentryDsn, morganFormat, logRocketKey, firebaseServiceAccount }
+export { env, port, logLevel, sentryDsn, morganFormat, firebaseServiceAccount }

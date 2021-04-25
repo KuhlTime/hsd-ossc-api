@@ -4,8 +4,6 @@ import morgan from 'morgan'
 import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing'
 
-import './logrocket'
-
 import { morganFormat } from './env'
 
 // load router
