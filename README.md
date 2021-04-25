@@ -52,4 +52,4 @@ In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](
 
 ## 👨‍⚖️ Disclaimer
 
-I will not take any responsibility for any malfunctions or consequences that may arrise from using this tool.
+I will not take any responsibility for any malfunctions or consequences that may arise from using this tool.
