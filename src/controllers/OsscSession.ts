@@ -312,7 +312,7 @@ export default class OsscSession {
 	 * This handles each exam page inside the `ModuleExtract`.
 	 * Each `Score` gets scraped and then uploaded to firebase.
 	 * If the particular `Score` has already been uploaded to firebase
-	 * it gets sckipped.
+	 * it gets skipped.
 	 * @param extract
 	 * @param cookie The session cookie.
 	 */
