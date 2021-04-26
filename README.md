@@ -15,13 +15,13 @@ In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](
 
 🚨 **IMPORTANT: Any confidential data should never transmitted over unencrypted `http` but instead be transmitted over `https`**
 
-[GET `/ossc`](https://api.kuhlti.me/ossc): This is the production endpoint. Request made to this url will result in the server performing the request on the ossc website. This route requires valid login credentials. In order to send these you need to specify the `Authorization` Header inside your HTTP Request. The value of which has to be formatted as follows (pseudo-code):
+[GET `/ossc`](https://api.kuhlti.me/ossc): This is the production endpoint. Requests made to this url will result in the server performing the request on the ossc website. This route requires valid login credentials. In order to send these you need to specify the `Authorization` header inside your HTTP request. The value of which has to be formatted as follows (pseudo-code):
 
 ```sh
 Authorization: Basic $base64Encode($username + ':' + $password)
 ```
 
-[GET `/ossc/test`](https://api.kuhlti.me/ossc/test): In order to reduce the stress on the ossc server, you can call the /test endpoint. This returns a boilerplate of the data you can expect from the production version.
+[GET `/ossc/test`](https://api.kuhlti.me/ossc/test): In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
 
 ## 🌍 Resources
 
