@@ -1,4 +1,4 @@
-# node-ossc
+![Banner](assets/banner.png)
 
 This is an API Server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store none user related information about the exams, scraped from the website.
 
