@@ -7,7 +7,7 @@ This is an API Server to easly get grades and exam data from the OSSC grades ser
 Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
 ![Request Flowchart](assets/request-flow.png)
 
-## 👩‍💻 Usage
+## 👩‍💻 Setup
 
 In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](https://heroku.com)) or try it out locally.
 
