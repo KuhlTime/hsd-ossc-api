@@ -4,12 +4,12 @@
 // TODO: Capture degree, regulation, topic in object
 
 import https from 'https'
+import colors from 'colors'
+import querystring from 'querystring'
 import { URL } from 'url'
 import { IncomingMessage } from 'http'
-import querystring from 'querystring'
 import { TableParser, Table } from '../utilities/TableParser'
 import { ModuleExtract, Student, Score } from '../models'
-import colors from 'colors'
 import { classToPlain } from 'class-transformer'
 import { storeScore, fetchScoresForModule } from '../config/firebase'
 
