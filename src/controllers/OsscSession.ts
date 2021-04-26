@@ -313,7 +313,7 @@ export default class OsscSession {
 	 * Each `Score` gets scraped and then uploaded to firebase.
 	 * If the particular `Score` has already been uploaded to firebase
 	 * it gets skipped.
-	 * @param extract
+	 * @param extract Represents a scraped Score Page.
 	 * @param cookie The session cookie.
 	 */
 	private static async getAllScores(extract: ModuleExtract, cookie: string) {

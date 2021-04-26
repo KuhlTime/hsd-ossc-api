@@ -3,6 +3,10 @@ import { Table } from '../utilities/TableParser'
 import { Module, Exam, WorkExperience } from './'
 import { Expose } from 'class-transformer'
 
+/**
+ * A `ModuleExtract` keeps information about each and every module found on
+ * the scraped web page.
+ */
 export default class ModuleExtract {
 	modules: Module[] = []
 
@@ -10,7 +14,7 @@ export default class ModuleExtract {
 		/**
 		 * Filtered array of all module rows.
 		 * > For each module there might be multiple
-		 * Exams and Practical Excersizes. A module can be identified if its id is 5
+		 * Exams and Practical Exercises. A module can be identified if its id is 5
 		 * digits long and divisable by 10.
 		 */
 		const moduleRows = table.rows.filter(row => {
@@ -55,16 +59,27 @@ export default class ModuleExtract {
 		}
 	}
 
+	/**
+	 * Returns an array of grades. One grade for each successfully closed module.
+	 */
 	private get gradesArray(): number[] {
 		const a = this.modules.filter(module => module.grade !== undefined).map(module => module.grade) as number[]
 		return a
 	}
 
+	/**
+	 * Returns the total credit points the student has scored.
+	 */
 	@Expose()
 	get totalCreditPoints(): number {
 		return this.modules.map(module => module.creditPoints).sum()
 	}
 
+	/**
+	 * Returns the avarage grade calculated by the sum of all grades
+	 * devided by the number of completed modules.
+	 */
+	// TODO: Modules are weight differently. Take this into account.
 	@Expose()
 	get avgGrade(): number | undefined {
 		return this.gradesArray.avg()
