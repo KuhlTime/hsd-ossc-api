@@ -1,6 +1,5 @@
 // NOTE: 👻 Checkout proxy rotation
 // NOTE: Checkout APIFY - https://docs.apify.com/web-scraping-101/anti-scraping-techniques#ip-address-based-blocking
-// TODO: Cleanup request and make them more reusable
 // TODO: Capture degree, regulation, topic in object
 
 import https from 'https'
