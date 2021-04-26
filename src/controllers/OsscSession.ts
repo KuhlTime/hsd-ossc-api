@@ -94,7 +94,6 @@ export default class OsscSession {
 
 			const requestOptions = this.generateGetRequestOptions(cookie, params)
 
-			// TODO: Check if I need to use axios `withCredentials: true`
 			const request = https.request(requestOptions, res => {
 				this.getBody(res).then(body => {
 					const regex = new RegExp('(?<=asi=)(\\w|\\.|\\$)*')
