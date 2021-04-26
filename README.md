@@ -52,4 +52,4 @@ In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](
 
 ## 👨‍⚖️ Disclaimer
 
-I will not take any responsibility for any malfunctions or consequences that may arise from using this tool. For the development of this tool I used the following guide: [Notenspiegel vom Prüfungsamt abrufen (QIS)](https://www.python-forum.de/viewtopic.php?t=9870)
+I will not take any responsibility for any malfunctions or consequences that may arise from using this tool. For the development of this tool I used the following ressource: [Notenspiegel vom Prüfungsamt abrufen (QIS)](https://www.python-forum.de/viewtopic.php?t=9870)
