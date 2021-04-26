@@ -69,12 +69,4 @@ export default class ModuleExtract {
 	get avgGrade(): number | undefined {
 		return this.gradesArray.avg()
 	}
-
-	forExam = (callback: (exam: Exam) => void) => {
-		this.modules.forEach(module => {
-			module.exams.forEach(exam => {
-				callback(exam)
-			})
-		})
-	}
 }
