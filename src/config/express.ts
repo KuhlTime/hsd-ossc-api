@@ -42,14 +42,13 @@ app.use(morgan(morganFormat))
 app.use('/ossc', osscRouter)
 
 // setup routes
-app.get('/info', (req, res) => {
+app.get('/', (req, res) => {
 	res.send({
 		author: 'André Kuhlmann',
 		contact: 'akuhltime@gmail.com',
 		website: 'https://kuhlti.me',
 		twitter: 'https://twitter.com/kuhltime',
-		github: 'https://github.com/kuhltime',
-		terms: 'Visit http://localhost:3000/terms for the terms of usage'
+		github: 'https://github.com/kuhltime'
 	})
 })
 
