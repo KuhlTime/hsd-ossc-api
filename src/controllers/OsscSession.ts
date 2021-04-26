@@ -288,7 +288,7 @@ export default class OsscSession {
 				// If there are any scores that have not been store on firebase.
 				// Crawl them and store them to firebase
 				if (exam.score === undefined && exam.scoreLink !== undefined && cookie !== undefined) {
-					console.log('No score found')
+					console.log(`No score found for ${module.name} on the ${exam.examinationDate?.toDateString()}`)
 					exam.score = await this.getScore(exam.scoreLink, cookie)
 					storeScore(exam.score)
 				}
