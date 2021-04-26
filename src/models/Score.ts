@@ -48,7 +48,7 @@ export default class Score {
 	@Expose()
 	get attendes(): { total: number; passed: number; failed: number } {
 		const total = this.grades.sum()
-		const failed = this.grades[3]
+		const failed = this.grades[4]
 
 		return {
 			total: total,
