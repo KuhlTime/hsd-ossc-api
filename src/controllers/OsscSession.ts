@@ -280,15 +280,11 @@ export default class OsscSession {
 	 * @param cookie
 	 */
 	private static async getAllScores(extract: ModuleExtract, cookie) {
-		for (let m = 0; m < extract.modules.length; m++) {
-			const module = extract.modules[m]
-
+		for (const module of extract.modules) {
 			// Tries to find the scores inside the firebase db
 			await fetchScoresForModule(module)
 
-			for (let e = 0; e < module.exams.length; e++) {
-				const exam = module.exams[e]
-
+			for (const exam of module.exams) {
 				// If there are any scores that have not been store on firebase.
 				// Crawl them and store them to firebase
 				if (exam.score === undefined && exam.scoreLink !== undefined && cookie !== undefined) {
