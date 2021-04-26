@@ -280,7 +280,7 @@ export default class OsscSession {
 	}
 
 	/**
-	 * Logs out the user and invalidates the session cookie.
+	 * Logout the user and invalidate the session cookie.
 	 * @param cookie
 	 */
 	private static logout(cookie: string) {
