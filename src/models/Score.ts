@@ -56,6 +56,4 @@ export default class Score {
 			failed: failed
 		}
 	}
-
-	// TODO: Simple Index values of each grade enum
 }

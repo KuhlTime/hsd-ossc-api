@@ -310,7 +310,7 @@ export default class OsscSession {
 	 * Each `Score` gets scraped and then uploaded to firebase.
 	 * If the particular `Score` has already been uploaded to firebase
 	 * it gets sckipped.
-	 * @param extract
+	 * @param extract A reference to the `ModuleExtract`.
 	 * @param cookie The session cookie.
 	 */
 	private static async getAllScores(extract: ModuleExtract, cookie: string) {
@@ -324,6 +324,8 @@ export default class OsscSession {
 				if (exam.score === undefined && exam.scoreLink !== undefined && cookie !== undefined) {
 					console.log(`No score found for ${module.name} on the ${exam.examinationDate?.toDateString()}`)
 					exam.score = await this.getScore(exam.scoreLink, cookie)
+
+					// save the score object to firebase
 					storeScore(exam.score)
 				}
 			}

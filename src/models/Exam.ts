@@ -25,9 +25,5 @@ export default class Exam {
 			const decoded = row['Note'].link.replace(/&amp;/g, '&')
 			this.scoreLink = new URL(decoded)
 		}
-
-		// Check if firestore has score
-
-		// Else download score
 	}
 }
