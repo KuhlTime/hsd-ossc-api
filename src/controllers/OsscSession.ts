@@ -58,14 +58,20 @@ export default class OsscSession {
 				 */
 				const setCookieHeader = res.headers['set-cookie']?.find(c => c.includes('JSESSIONID'))
 
-				// TODO: Handle possible undefined state?! Or does it already get captured by request.on('error')
-				const cookie = this.unwrap(setCookieHeader?.split(';')[0])
+				// Handle the case when no 'set-cookie' header has been found.
+				if (!setCookieHeader) {
+					reject(new Error('Unable to find set-cookie header in response.'))
+					return
+				}
+
+				const cookie = this.unwrap(setCookieHeader.split(';')[0])
 				resolve(cookie)
 			})
 
 			// on request error
 			request.on('error', e => {
 				reject(e)
+				return
 			})
 
 			// execute request
