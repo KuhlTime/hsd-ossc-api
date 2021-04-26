@@ -2,8 +2,21 @@ import cheerio from 'cheerio'
 import '../@types/ArrayExtensions'
 import '../@types/StringExtensions'
 
+/**
+ * A `Table` is a simple object that stores information in an array of rows.
+ * Each row consists of an object where the key is the header of each coloumn.
+ */
 class Table {
+	/**
+	 * An array of header names.
+	 */
 	headers: Array<string> = []
+
+	/**
+	 * An array of rows. Each row being represented by a js object
+	 * where the key is the refereing coloumn name and the value is
+	 * a `TableCell`
+	 */
 	rows: Array<Record<string, TableCell>> = []
 
 	/**
@@ -16,8 +29,20 @@ class Table {
 	}
 }
 
+/**
+ * Because the HTML Table maybe includes an url to the exams
+ * detail page. The value as well as the link get stored inside
+ * a `TableCell` object.
+ */
 class TableCell {
+	/**
+	 * The value of the particular cell.
+	 */
 	value: string
+
+	/**
+	 * A url to a subpage, if provided inside the HTML cell.
+	 */
 	link: string | undefined
 
 	constructor(value: string, link: string | undefined) {
@@ -26,9 +51,12 @@ class TableCell {
 	}
 }
 
+/**
+ * A HTML <table></table> Parser
+ */
 class TableParser {
 	/**
-	 * Parses a html string into an array of tables
+	 * Parses a HTML string into an array of tables
 	 * @param body Uses the complete html string as input
 	 */
 	public static parse(body: string) {
