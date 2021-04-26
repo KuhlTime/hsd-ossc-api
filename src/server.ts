@@ -2,7 +2,7 @@ import colors from 'colors'
 import app from './config/express'
 import './config/firebase'
 
-import { port, env } from './config/env'
+import { port } from './config/env'
 
 // start the server
 
