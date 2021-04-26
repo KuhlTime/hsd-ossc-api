@@ -2,6 +2,7 @@
 // NOTE: Checkout APIFY - https://docs.apify.com/web-scraping-101/anti-scraping-techniques#ip-address-based-blocking
 // TODO: Cleanup request and make them more reusable
 // TODO: Capture degree, regulation, topic in object
+// TODO: Add more comments
 
 import https from 'https'
 import { URL } from 'url'
@@ -13,6 +14,10 @@ import colors from 'colors'
 import { classToPlain } from 'class-transformer'
 import { storeScore, fetchScoresForModule } from '../config/firebase'
 
+/**
+ * An `OSSCSession` is used to handle the connection to the OSSC website.
+ * In different methods relevant data gets extracted.
+ */
 export default class OsscSession {
 	static host = 'ossc.hs-duesseldorf.de'
 	static path = '/qisserver/rds'
@@ -60,7 +65,7 @@ export default class OsscSession {
 				resolve(cookie)
 			})
 
-			// On request error
+			// on request error
 			request.on('error', e => {
 				reject(e)
 			})
@@ -71,6 +76,9 @@ export default class OsscSession {
 		})
 	}
 
+	/**
+	 * Get a required value called asi. Most likly this is some server parameter.
+	 */
 	private static async getAsi(cookie: string): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const params = {
@@ -92,6 +100,7 @@ export default class OsscSession {
 				})
 			})
 
+			// on request error
 			request.on('error', e => {
 				console.error(e.message)
 				reject(e)
@@ -130,16 +139,20 @@ export default class OsscSession {
 				})
 			})
 
+			// on request error
 			request.on('error', e => {
 				console.error(e.message)
 				reject(e)
 			})
 
+			// execute request
 			request.end()
 		})
 	}
 
-	// Return Topic Name
+	/**
+	 * Recieve the Regulation ID and the Topic ID
+	 */
 	private static async getRegulationAndTopicId(
 		cookie: string,
 		asi: string,
@@ -175,15 +188,21 @@ export default class OsscSession {
 				})
 			})
 
+			// on request error
 			request.on('error', e => {
 				console.error(e.message)
 				reject(e)
 			})
 
+			// execute request
 			request.end()
 		})
 	}
 
+	/**
+	 * Get the students grade page providing the information recieved beforehand.
+	 * @returns Returns an array of `Table`s. One table for each <table> html element that was found on the page.
+	 */
 	private static async getGrades(
 		cookie: string,
 		asi: string,
@@ -211,15 +230,23 @@ export default class OsscSession {
 				})
 			})
 
+			// on request error
 			request.on('error', e => {
 				console.error(e.message)
 				reject(e)
 			})
 
+			// execute request
 			request.end()
 		})
 	}
 
+	/**
+	 * Scrape a single exam score page.
+	 * @param url The url of the exam.
+	 * @param cookie The session cookie.
+	 * @returns Returns a `Score` object.
+	 */
 	private static async getScore(url: URL, cookie: string): Promise<Score> {
 		return new Promise((resolve, reject) => {
 			const requestOptions = {
@@ -238,17 +265,19 @@ export default class OsscSession {
 				})
 			})
 
+			// on request error
 			request.on('error', e => {
 				console.error(e.message)
 				reject(e)
 			})
 
+			// execute request
 			request.end()
 		})
 	}
 
 	/**
-	 * Logs out the user and invalidates the cookie.
+	 * Logs out the user and invalidates the session cookie.
 	 * @param cookie
 	 */
 	private static logout(cookie: string) {
@@ -265,28 +294,33 @@ export default class OsscSession {
 				resolve()
 			})
 
+			// on request error
 			request.on('error', e => {
 				console.error(e.message)
 				reject(e)
 			})
 
+			// execute request
 			request.end()
 		})
 	}
 
 	/**
-	 *
+	 * This handles each exam page inside the `ModuleExtract`.
+	 * Each `Score` gets scraped and then uploaded to firebase.
+	 * If the particular `Score` has already been uploaded to firebase
+	 * it gets sckipped.
 	 * @param extract
-	 * @param cookie
+	 * @param cookie The session cookie.
 	 */
-	private static async getAllScores(extract: ModuleExtract, cookie) {
+	private static async getAllScores(extract: ModuleExtract, cookie: string) {
 		for (const module of extract.modules) {
 			// Tries to find the scores inside the firebase db
 			await fetchScoresForModule(module)
 
 			for (const exam of module.exams) {
-				// If there are any scores that have not been store on firebase.
-				// Crawl them and store them to firebase
+				// If there are any scores that have not been stored on firebase,
+				// crawl them and store them to firebase.
 				if (exam.score === undefined && exam.scoreLink !== undefined && cookie !== undefined) {
 					console.log(`No score found for ${module.name} on the ${exam.examinationDate?.toDateString()}`)
 					exam.score = await this.getScore(exam.scoreLink, cookie)
@@ -296,7 +330,14 @@ export default class OsscSession {
 		}
 	}
 
-	public static async requestGrades(username: string, password: string) {
+	/**
+	 * Returns the final JSON object containing all the scraped information
+	 * for the logged in user.
+	 * @param username The username of the student.
+	 * @param password The password of the student.
+	 * @returns The scraped information in form of a JSON object.
+	 */
+	public static async requestGrades(username: string, password: string): Promise<Record<string, unknown>> {
 		const start = Date.now()
 		let cookie: string | undefined
 
@@ -390,6 +431,12 @@ export default class OsscSession {
 		}
 	}
 
+	/**
+	 * A asynchronous function that gets resolved once the body of the provided
+	 * request has been completly transmitted.
+	 * @param res The response object which the body should be recieved from.
+	 * @returns The response body.
+	 */
 	private static getBody(res: IncomingMessage): Promise<string> {
 		return new Promise((resolve, _) => {
 			let body = ''
@@ -406,10 +453,16 @@ export default class OsscSession {
 		})
 	}
 
+	/**
+	 * Helper function to log a message for a particular user.
+	 */
 	private static userLog(user: string, message: string) {
 		console.log(colors.blue(`[${user}]`) + ': ' + message)
 	}
 
+	/**
+	 * Helper function to log an error message for a particular user.
+	 */
 	private static userErrorLog(user: string, error: Error) {
 		console.error(colors.red(`[${user}]`) + ': ' + colors.bgRed(error.message))
 	}
