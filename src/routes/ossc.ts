@@ -8,7 +8,7 @@ import exampleResponse from './example.json'
 const router = Router()
 
 // set routes
-router.get('/modules', (req: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
 	const user = auth(req)
 
 	if (user?.name && user?.pass) {

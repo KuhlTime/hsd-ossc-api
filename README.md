@@ -1,4 +1,4 @@
-# node-ossc
+![Banner](assets/banner.png)
 
 This is an API Server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store none user related information about the exams, scraped from the website.
 
@@ -7,9 +7,21 @@ This is an API Server to easly get grades and exam data from the OSSC grades ser
 Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
 ![Request Flowchart](assets/request-flow.png)
 
-## 👩‍💻 Usage
+## 👩‍💻 Setup
 
 In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](https://heroku.com)) or try it out locally.
+
+## 🌈 Endpoints
+
+🚨 **IMPORTANT: Any confidential data should never transmitted over unencrypted `http` but instead be transmitted over `https`**
+
+[GET `/ossc`](https://api.kuhlti.me/ossc): This is the production endpoint. Requests made to this url will result in the server performing the request on the ossc website. This route requires valid login credentials. In order to send these you need to specify the `Authorization` header inside your HTTP request. The value of which has to be formatted as follows (pseudo-code):
+
+```sh
+Authorization: Basic $base64Encode($username + ':' + $password)
+```
+
+[GET `/ossc/test`](https://api.kuhlti.me/ossc/test): In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
 
 ## 🌍 Resources
 
