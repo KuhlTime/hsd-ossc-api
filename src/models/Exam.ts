@@ -1,10 +1,15 @@
 import moment from 'moment'
 import Score from './Score'
 import Semester from './Semester'
-import { Exclude, Expose } from 'class-transformer'
+import { Exclude } from 'class-transformer'
 import { TableCell } from '../utilities/TableParser'
-import url from 'url'
 
+/**
+ * A `Exam` represents a single exam the student took.
+ * It keeps of the time the student took the specific
+ * exam and holds information about the overall score
+ * that was achived.
+ */
 export default class Exam {
 	semester: Semester
 	grade: number
@@ -25,9 +30,5 @@ export default class Exam {
 			const decoded = row['Note'].link.replace(/&amp;/g, '&')
 			this.scoreLink = new URL(decoded)
 		}
-
-		// Check if firestore has score
-
-		// Else download score
 	}
 }
