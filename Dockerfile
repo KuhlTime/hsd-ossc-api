@@ -1,22 +1,46 @@
-FROM node:14
+###############
+# BUILD STAGE #
+###############
 
-# Create app directory
+FROM node:lts-alpine as build
+
+# Select working directory
 WORKDIR /usr/src/app
 
-# Copy package.json config
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-
-# Install app dependencies
-RUN npm ci
-# If you are building your code for production
-# RUN pnpm ci --only=production
-
-# Bundle app source
+# Copy app source to work directory
 COPY . .
 
-# Define exposed port
-EXPOSE 8080
+# Diable npm update message
+RUN npm config set update-notifier false
 
-# Start node
-CMD ["npm", "start"]
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
+
+# Build app
+COPY . .
+RUN npm run build
+
+
+#############
+# RUN STAGE #
+#############
+
+FROM node:lts-alpine
+
+# Select working directory
+WORKDIR /usr/src/app
+
+# Diable npm update message
+RUN npm config set update-notifier false
+
+# Install production dependencies
+COPY package*.json ./
+RUN npm ci --only production
+
+# Copy /dist folder from build stage
+COPY --from=build /usr/src/app/dist ./dist
+
+# Start the server
+EXPOSE 8080
+CMD npm start
