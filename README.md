@@ -11,6 +11,18 @@ Here you can see a flow diagram on how to retrive the students grades and the sc
 
 In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](https://heroku.com)) or try it out locally.
 
+### ⛴ Docker
+
+```sh
+docker run\
+  --name node-ossc\
+  -e NODE_ENV="production"\
+	-e FIREBASE_SERVICE_ACCOUNT_BASE64=""\
+  -e SENTRY_DSN=""\
+	-p 80:8080\
+  ghcr.io/kuhltime/node-ossc:latest
+```
+
 ## 🌈 Endpoints
 
 🚨 **IMPORTANT: Any confidential data should never transmitted over unencrypted `http` but instead be transmitted over `https`**
