@@ -17,9 +17,9 @@ In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](
 docker run\
   --name node-ossc\
   -e NODE_ENV="production"\
-	-e FIREBASE_SERVICE_ACCOUNT_BASE64=""\
+  -e FIREBASE_SERVICE_ACCOUNT_BASE64=""\
   -e SENTRY_DSN=""\
-	-p 80:8080\
+  -p 80:8080\
   ghcr.io/kuhltime/node-ossc:latest
 ```
 
