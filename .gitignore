@@ -187,3 +187,5 @@ $RECYCLE.BIN/
 keys/*
 temp
 debug
+
+pnpm-lock.yaml
