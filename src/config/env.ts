@@ -2,8 +2,7 @@ import * as dotenv from 'dotenv-safe'
 import path from 'path'
 
 dotenv.config({
-	path: path.join(__dirname, '../../.env'),
-	sample: path.join(__dirname, '../../.env.example')
+	path: path.join(__dirname, '../../.env')
 })
 
 const env = process.env.NODE_ENV
