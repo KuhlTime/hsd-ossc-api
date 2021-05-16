@@ -10,6 +10,11 @@ import { Expose } from 'class-transformer'
 export default class ModuleExtract {
 	modules: Module[] = []
 
+	/**
+	 * The constructor parses the provided 'html' table
+	 * to individual modules.
+	 * @param table A representitive of the html table.
+	 */
 	constructor(table: Table) {
 		/**
 		 * Filtered array of all module rows.
