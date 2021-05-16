@@ -13,6 +13,15 @@ Here you can see a flow diagram on how to retrive the students grades and the sc
 
 In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](https://heroku.com)) or try it out locally.
 
+### 👾 Environment Variables
+
+- `FIREBASE_SERVICE_ACCOUNT_BASE64`: This variable holds a Base64 encoded string of the service account json file, you can download from you firebase console. To encode the file use the following shell command:
+
+	```sh
+  cat serviceAccountKey.json | base64
+	```
+- `SENTRY_DSN`: In case you want to enable debugging using [Sentry.io](https://sentry.io) you can provide your DSN to this variable.
+
 ### ⛴ Docker
 
 ```sh
