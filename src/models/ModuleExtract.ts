@@ -68,6 +68,7 @@ export default class ModuleExtract {
 	 * Returns an array of grades. One grade for each successfully closed module.
 	 */
 	private get gradesArray(): number[] {
+		// TODO: Add Factor
 		const a = this.modules.filter(module => module.grade !== undefined).map(module => module.grade) as number[]
 		return a
 	}
