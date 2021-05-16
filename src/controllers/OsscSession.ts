@@ -368,7 +368,7 @@ export default class OsscSession {
 			await this.getAllScores(extract, cookie)
 
 			const duration = Date.now() - start
-			// this.userLog(username, 'Request duration: ' + duration + 'ms')
+			this.userLog(username, 'Request duration: ' + duration + 'ms')
 
 			this.logout(cookie).then(() => {
 				this.userLog(username, 'Logged Out')
