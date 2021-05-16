@@ -1,6 +1,9 @@
 import { WorkExperience, Exam } from '.'
 import { Expose } from 'class-transformer'
 import { TableCell } from '../utilities/TableParser'
+import HandbookManager from '../controllers/HandbookManager'
+
+const handbookManager = HandbookManager.shared
 
 export default class Module {
 	id: number
@@ -40,5 +43,19 @@ export default class Module {
 			exams: this.exams.length,
 			workExperiences: this.workExperiences.length
 		}
+	}
+
+	get handbookModule() {
+		return handbookManager.getEnrichedModuleByExamId(this.exams.first()?.id || -1)
+	}
+
+	@Expose()
+	get factor(): number | undefined {
+		return this.handbookModule?.factor
+	}
+
+	@Expose()
+	get specialization(): string | undefined {
+		return this.handbookModule?.specialization
 	}
 }

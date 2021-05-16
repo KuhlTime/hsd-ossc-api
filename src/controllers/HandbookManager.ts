@@ -27,18 +27,33 @@ export default class HandbookManager {
 		console.log(`Downloaded Handbooks: ${this.handbooks.length}`)
 	}
 
-	/**
-	 * Returns an array of all modules from all handbooks.
-	 */
 	get allModules() {
 		return this.handbooks.flatMap(h => h.modules)
 	}
 
 	/**
+	 * Returns an array of all modules from all handbooks.
+	 */
+	get allEnrichedModules() {
+		return this.handbooks.flatMap(h =>
+			h.modules.map(m => {
+				// Add extra information
+				const factor = h.specializations.find(s => s.id === m.specialization)?.factor
+
+				return {
+					degreeId: h.id,
+					factor,
+					...m
+				}
+			})
+		)
+	}
+
+	/**
 	 * Returns information about a particular module for a given exam id.
 	 */
-	getModuleByExamId(id: number | string) {
+	getEnrichedModuleByExamId(id: number | string) {
 		const _id = String(id)
-		return this.allModules.find(m => String(m.id) === _id)
+		return this.allEnrichedModules.find(m => String(m.id) === _id)
 	}
 }

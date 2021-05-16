@@ -11,6 +11,7 @@ import { TableCell } from '../utilities/TableParser'
  * that was achived.
  */
 export default class Exam {
+	id: number
 	semester: Semester
 	grade: number
 	passed: boolean
@@ -21,6 +22,7 @@ export default class Exam {
 	scoreLink: URL | undefined
 
 	constructor(row: Record<string, TableCell>) {
+		this.id = parseInt(row['PNr.'].value)
 		this.semester = new Semester(row['Semester'].value)
 		this.grade = parseFloat(row['Note'].value.replace(',', '.'))
 		this.passed = row['Status'].value === 'bestanden'

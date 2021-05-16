@@ -67,9 +67,23 @@ export default class ModuleExtract {
 	/**
 	 * Returns an array of grades. One grade for each successfully closed module.
 	 */
-	private get gradesArray(): number[] {
-		// TODO: Add Factor
-		const a = this.modules.filter(module => module.grade !== undefined).map(module => module.grade) as number[]
+	private get gradesArray() {
+		const a = this.modules
+			.filter(m => m.grade !== undefined)
+			.map(m => {
+				// console.log(`${m.factor} x ${m.grade} - ${m.name}`)
+
+				// In case the factor could not be found the link to the specialization is
+				// not defined.
+				if (m.grade && !m.factor) {
+					console.warn(`Could not find factor for module ${m.name} (${m.id})!`)
+				}
+
+				return {
+					factor: m.factor || 1,
+					grade: m.grade || 0
+				}
+			})
 		return a
 	}
 
@@ -88,6 +102,8 @@ export default class ModuleExtract {
 	// TODO: Modules are weight differently. Take this into account.
 	@Expose()
 	get avgGrade(): number | undefined {
-		return this.gradesArray.avg()
+		const a = this.gradesArray.flatMap(o => Array(o.factor).fill(o.grade))
+		const b = a.avg()?.toPrecision(3)
+		return b ? parseFloat(b) : undefined
 	}
 }
