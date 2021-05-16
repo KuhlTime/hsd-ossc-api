@@ -376,6 +376,7 @@ export default class OsscSession {
 
 			const response = classToPlain({
 				duration,
+				degreeId: parseInt(degreeId),
 				student,
 				totalCreditPoints: extract.totalCreditPoints,
 				avgGrade: extract.avgGrade,
