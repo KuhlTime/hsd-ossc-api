@@ -39,10 +39,10 @@ app.use(morgan(morganFormat))
 
 // use routers
 // app.use(swaggerRouter)
-app.use('/ossc', osscRouter)
+app.use('/', osscRouter)
 
 // setup routes
-app.get('/', (req, res) => {
+app.get('/info', (req, res) => {
 	res.send({
 		author: 'André Kuhlmann',
 		contact: 'akuhltime@gmail.com',
