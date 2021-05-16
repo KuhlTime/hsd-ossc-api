@@ -335,6 +335,10 @@ export default class OsscSession {
 		}
 	}
 
+	// =============
+	// MAIN FUNCTION
+	// =============
+
 	/**
 	 * Returns the final JSON object containing all the scraped information
 	 * for the logged in user.
@@ -347,6 +351,7 @@ export default class OsscSession {
 		let cookie: string | undefined
 
 		try {
+			// Get required information
 			cookie = await this.getCookie(username, password)
 			this.userLog(username, 'Recived Cookie')
 
@@ -359,10 +364,15 @@ export default class OsscSession {
 			const a = await this.getRegulationAndTopicId(cookie, asi, degreeId)
 			this.userLog(username, 'Recieved Regulation and Topic ID')
 
+			// Get all the html table from the grades page
 			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
 
+			// Extract the student information from the first html table on the page
 			const student = new Student(tables[0])
+
+			// Extract grade information from the second html table on the page
 			const extract = new ModuleExtract(tables[1])
+
 			this.userLog(username, 'Recieved and Parsed Results')
 
 			await this.getAllScores(extract, cookie)
