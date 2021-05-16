@@ -2,6 +2,10 @@
 
 This is an API Server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store none user related information about the exams, scraped from the website.
 
+<div style="text-align: center; border: red 1px dashed" href="https://www.digitalocean.com/?refcode=850a4eba40bb&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
+	<img src="https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%203.svg">
+</div>
+
 ## 🛣 Concept
 
 Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
