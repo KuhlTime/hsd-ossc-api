@@ -52,6 +52,14 @@ export default class OsscSession {
 			}
 
 			const request = https.request(requestOptions, res => {
+				// 301 - REDIRECT sucess
+				// 200 - OK failed
+
+				if (res.statusCode === 200) {
+					reject(new Error('Invalid username or password.'))
+					return
+				}
+
 				/**
 				 * Example Header
 				 * Set-Cookie: JSESSIONID=6F1D9105EE3F280DF69CEEDFEDC10A97.ossc_a; Path=/qisserver; Secure; HttpOnly

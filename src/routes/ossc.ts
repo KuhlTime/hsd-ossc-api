@@ -11,12 +11,17 @@ const router = Router()
 router.get('/', (req: Request, res: Response) => {
 	const user = auth(req)
 
+	// TODO: Handle unauthorized
 	if (user?.name && user?.pass) {
 		OsscSession.requestGrades(user.name, user.pass)
 			.then(data => res.send({ type: 'success', data: data }))
 			.catch(err => res.status(500).send({ type: 'error', message: err.message }))
 	} else {
-		res.status(401).send({ type: 'error', message: 'Invalid username or password.' })
+		res.status(401).send({
+			type: 'error',
+			message: 'Could not extract username and password.',
+			tip: 'Set the authorization header is descibed in the README'
+		})
 	}
 })
 
