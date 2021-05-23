@@ -7,15 +7,12 @@ FROM node:lts-alpine as build
 # Select working directory
 WORKDIR /usr/src/app
 
-# Copy app source to work directory
-COPY . .
-
 # Diable npm update message
 RUN npm config set update-notifier false
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Build app
 COPY . .
