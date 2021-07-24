@@ -8,6 +8,7 @@ import { morganFormat } from './env'
 
 // load router
 import osscRouter from '../routes/ossc'
+import dataRouter from '../routes/data'
 
 // create server
 const app = express()
@@ -40,6 +41,7 @@ app.use(morgan(morganFormat))
 // use routers
 // app.use(swaggerRouter)
 app.use('/', osscRouter)
+app.use('/data', dataRouter)
 
 // setup routes
 app.get('/info', (req, res) => {

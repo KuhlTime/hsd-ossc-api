@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin'
 import { firebaseServiceAccount } from './env'
 import { Module, Score } from '../models'
-import { plainToClass, classToPlain } from 'class-transformer'
+import { classToPlain } from 'class-transformer'
 
 const app = admin.initializeApp({
 	credential: admin.credential.cert(firebaseServiceAccount),
@@ -58,4 +58,9 @@ async function storeScore(score: Score) {
 	}
 }
 
-export { db, fetchScoresForModule, storeScore }
+async function getAllData() {
+	const snapshot = await scoresDB.get()
+	return snapshot.docs.map(doc => doc.data())
+}
+
+export { db, fetchScoresForModule, storeScore, getAllData }
