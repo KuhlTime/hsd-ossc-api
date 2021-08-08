@@ -48,6 +48,8 @@ Authorization: Basic $base64Encode($username + ':' + $password)
 
 [GET `/ossc`](https://ossc.api.kuhlti.me/test): In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
 
+[GET `/data`](https://ossc.api.kuhlti.me/data): This Endpoint returns all data I store inside my database. I only store none user related information such as the date of each exam and the final result, which only contains the overview of how many students recieved a particular garde.
+
 ## 👨‍⚖️ Disclaimer
 
 I will not take any responsibility for any malfunctions or consequences that may arise from using this tool. For the development of this tool I used the following ressource: [Notenspiegel vom Prüfungsamt abrufen (QIS)](https://www.python-forum.de/viewtopic.php?t=9870)
