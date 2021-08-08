@@ -20,7 +20,7 @@ router.get('/', (req: Request, res: Response) => {
 		res.status(401).send({
 			type: 'error',
 			message: 'Could not extract username and password.',
-			tip: 'Set the authorization header is descibed in the README'
+			tip: 'Set the authorization header as described in the README'
 		})
 	}
 })
