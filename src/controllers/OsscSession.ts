@@ -271,8 +271,12 @@ export default class OsscSession {
 
 			const request = https.request(requestOptions, res => {
 				this.getBody(res).then(body => {
-					const score = new Score(body)
-					resolve(score)
+					try {
+						const score = new Score(body)
+						resolve(score)
+					} catch (error) {
+						reject(error)
+					}
 				})
 			})
 
@@ -334,10 +338,14 @@ export default class OsscSession {
 				// crawl them and store them to firebase.
 				if (exam.score === undefined && exam.scoreLink !== undefined && cookie !== undefined) {
 					console.log(`No score found for ${module.name} on the ${exam.examinationDate?.toDateString()}`)
-					exam.score = await this.getScore(exam.scoreLink, cookie)
 
-					// save the score object to firebase
-					storeScore(exam.score)
+					try {
+						exam.score = await this.getScore(exam.scoreLink, cookie)
+						storeScore(exam.score)
+					} catch (error) {
+						console.log(`Could not retrieve score board for ${module.name}`)
+						continue
+					}
 				}
 			}
 		}
