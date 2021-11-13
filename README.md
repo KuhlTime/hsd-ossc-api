@@ -33,7 +33,7 @@ docker run\
   -e FIREBASE_SERVICE_ACCOUNT_BASE64=""\
   -e SENTRY_DSN=""\
   -p 80:8080\
-  ghcr.io/kuhltime/node-ossc:latest
+  ghcr.io/kuhltime/hsd-ossc-api:latest
 ```
 
 ## 🌈 Endpoints
