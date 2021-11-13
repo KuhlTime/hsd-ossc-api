@@ -77,8 +77,8 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				reject(e)
+			request.on('error', error => {
+				reject(error)
 				return
 			})
 
@@ -112,9 +112,9 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				console.error(e.message)
-				reject(e)
+			request.on('error', error => {
+				console.error(error.message)
+				reject(error)
 			})
 
 			// execute request
@@ -151,9 +151,9 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				console.error(e.message)
-				reject(e)
+			request.on('error', error => {
+				console.error(error.message)
+				reject(error)
 			})
 
 			// execute request
@@ -200,9 +200,9 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				console.error(e.message)
-				reject(e)
+			request.on('error', error => {
+				console.error(error.message)
+				reject(error)
 			})
 
 			// execute request
@@ -242,9 +242,9 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				console.error(e.message)
-				reject(e)
+			request.on('error', error => {
+				console.error(error.message)
+				reject(error)
 			})
 
 			// execute request
@@ -281,9 +281,9 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				console.error(e.message)
-				reject(e)
+			request.on('error', error => {
+				console.error(error.message)
+				reject(error)
 			})
 
 			// execute request
@@ -310,9 +310,9 @@ export default class OsscSession {
 			})
 
 			// on request error
-			request.on('error', e => {
-				console.error(e.message)
-				reject(e)
+			request.on('error', error => {
+				console.error(error.message)
+				reject(error)
 			})
 
 			// execute request
@@ -411,7 +411,7 @@ export default class OsscSession {
 
 			// Response data
 			return Promise.resolve(response)
-		} catch (e) {
+		} catch (error) {
 			// In case the user has already been logged in when the error occurred. -> Logout
 			if (cookie) {
 				this.logout(cookie).then(() => {
@@ -419,10 +419,10 @@ export default class OsscSession {
 				})
 			}
 
-			console.error(e)
-			this.userErrorLog(username, e)
+			console.error(error)
+			this.userErrorLog(username, error as Error)
 
-			return Promise.reject(e)
+			return Promise.reject(error)
 		}
 	}
 
