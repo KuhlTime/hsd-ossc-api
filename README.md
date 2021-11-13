@@ -22,7 +22,7 @@ In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](
 	```sh
   cat serviceAccountKey.json | base64
 	```
-- `SENTRY_DSN`: In case you want to enable debugging using [Sentry.io](https://sentry.io) you can provide your DSN to this variable.
+- `SENTRY_DSN` (optional): In case you want to enable debugging using [Sentry.io](https://sentry.io) you can provide your DSN to this variable.
 
 ### ⛴ Docker
 
