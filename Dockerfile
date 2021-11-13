@@ -33,7 +33,7 @@ RUN npm config set update-notifier false
 
 # Install production dependencies
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --only production
 
 # Copy /dist folder from build stage
 COPY --from=build /usr/src/app/dist ./dist
