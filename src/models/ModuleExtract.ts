@@ -79,8 +79,15 @@ export default class ModuleExtract {
 					console.warn(`Could not find factor for module ${m.name} (${m.id})!`)
 				}
 
+				let wmnFactor: number | undefined
+
+				if (m.name.toLowerCase().includes('wmnt') || m.name.toLowerCase().includes('wmt')) {
+					wmnFactor = 2
+					console.log('Factor set')
+				}
+
 				return {
-					factor: m.factor || 1,
+					factor: m.factor || wmnFactor || 1,
 					grade: m.grade || 0
 				}
 			})
