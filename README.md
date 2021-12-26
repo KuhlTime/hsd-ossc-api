@@ -46,9 +46,33 @@ docker run\
 Authorization: Basic $base64Encode($username + ':' + $password)
 ```
 
-[GET `/ossc`](https://ossc.api.kuhlti.me/test): In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
+```sh
+curl "https://ossc.api.kuhlti.me" -u "<username>:<password>"
+```
+
+Using [`jq`](https://stedolan.github.io/jq/) you can use it to create complex cli pipelines.
+
+```sh
+curl "https://ossc.api.kuhlti.me" -u "<username>:<password>" | jq
+```
+
+[GET `/avg`](https://ossc.api.kuhlti.me/avg): This endpoint returns just the average grade as a value. It can easly be used for further processing.
+
+```sh
+curl "https://ossc.api.kuhlti.me/avg" -u "<username>:<password>"
+```
+
+[GET `/test`](https://ossc.api.kuhlti.me/test): In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
+
+```sh
+curl "https://ossc.api.kuhlti.me/test"
+```
 
 [GET `/data`](https://ossc.api.kuhlti.me/data): This Endpoint returns all data I store inside my database. I only store none user related information such as the date of each exam and the final result, which only contains the overview of how many students recieved a particular garde.
+
+```sh
+curl "https://ossc.api.kuhlti.me/data"
+```
 
 ## 👨‍⚖️ Disclaimer
 
