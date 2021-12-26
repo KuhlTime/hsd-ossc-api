@@ -15,6 +15,11 @@ router.get('/', authGuard, (req: any, res: Response) => {
 		.then(data => res.send({ type: 'success', data: data }))
 		.catch(err => res.status(500).send({ type: 'error', message: err.message }))
 })
+
+router.get('/avg', authGuard, (req: any, res: Response) => {
+	OsscSession.requestGrades(req.user.name, req.user.pass)
+		.then(data => res.status(200).send('' + data.avgGrade))
+		.catch(err => res.status(500).send({ type: 'error', message: err.message }))
 })
 
 router.get('/test', (req: Request, res: Response) => {
