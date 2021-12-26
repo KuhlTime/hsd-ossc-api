@@ -40,39 +40,43 @@ docker run\
 
 🚨 **IMPORTANT: Any confidential data should never transmitted over unencrypted `http` but instead be transmitted over `https`**
 
-[GET `/`](https://ossc.api.kuhlti.me/): This is the production endpoint. Requests made to this url will result in the server performing the request on the ossc website. This route requires valid login credentials. In order to send these you need to specify the `Authorization` header inside your HTTP request. The value of which has to be formatted as follows (pseudo-code):
+- [GET `/`](https://ossc.api.kuhlti.me/):<br>
+	This is the production endpoint. Requests made to this url will result in the server performing the request on the ossc website. This route requires valid login credentials. In order to send these you need to specify the `Authorization` header inside your HTTP request. The value of which has to be formatted as follows (pseudo-code):
 
-```sh
-Authorization: Basic $base64Encode($username + ':' + $password)
-```
+	```sh
+	Authorization: Basic $base64Encode($username + ':' + $password)
+	```
 
-```sh
-curl "https://ossc.api.kuhlti.me" -u "<username>:<password>"
-```
+	```sh
+	curl "https://ossc.api.kuhlti.me" -u "<username>:<password>"
+	```
 
-Using [`jq`](https://stedolan.github.io/jq/) you can use it to create complex cli pipelines.
+	Using [`jq`](https://stedolan.github.io/jq/) you can use it to create complex cli pipelines.
 
-```sh
-curl "https://ossc.api.kuhlti.me" -u "<username>:<password>" | jq
-```
+	```sh
+	curl "https://ossc.api.kuhlti.me" -u "<username>:<password>" | jq
+	```
 
-[GET `/avg`](https://ossc.api.kuhlti.me/avg): This endpoint returns just the average grade as a value. It can easly be used for further processing.
+- [GET `/avg`](https://ossc.api.kuhlti.me/avg):<br>
+	This endpoint returns just the average grade as a value. It can easly be used for further processing.
 
-```sh
-curl "https://ossc.api.kuhlti.me/avg" -u "<username>:<password>"
-```
+	```sh
+	curl "https://ossc.api.kuhlti.me/avg" -u "<username>:<password>"
+	```
 
-[GET `/test`](https://ossc.api.kuhlti.me/test): In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
+- [GET `/test`](https://ossc.api.kuhlti.me/test):<br>
+	In order to reduce the stress on the ossc server, while developing, you can use this endpoint to get a boilerplate of the data you can expect from the production endpoint.
 
-```sh
-curl "https://ossc.api.kuhlti.me/test"
-```
+	```sh
+	curl "https://ossc.api.kuhlti.me/test"
+	```
 
-[GET `/data`](https://ossc.api.kuhlti.me/data): This Endpoint returns all data I store inside my database. I only store none user related information such as the date of each exam and the final result, which only contains the overview of how many students recieved a particular garde.
+- [GET `/data`](https://ossc.api.kuhlti.me/data):<br>
+	This Endpoint returns all data I store inside my database. I only store none user related information such as the date of each exam and the final result, which only contains the overview of how many students recieved a particular garde.
 
-```sh
-curl "https://ossc.api.kuhlti.me/data"
-```
+	```sh
+	curl "https://ossc.api.kuhlti.me/data"
+	```
 
 ## 👨‍⚖️ Disclaimer
 
