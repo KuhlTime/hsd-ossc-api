@@ -1,12 +1,14 @@
 {
 	"name": "OSSC API",
-	"description": "This is a self hosted, unofficial, privacy first, OSSC API that can fetch your grades from the ossc server.",
-	"repository": "https://github.com/heroku/node-js-getting-started",
-	"logo": "https://node-js-sample.herokuapp.com/node.png",
+	"description": "This is a self hosted, unofficial, privacy first, OSSC API that provides an easy to use API for your HSD OSSC grades.",
+	"repository": "https://github.com/KuhlTime/hsd-ossc-api",
+	"logo": "https://raw.githubusercontent.com/KuhlTime/KuhlTime/main/assets/hsd.svg",
+	"website": "https://github.com/KuhlTime/hsd-ossc-api",
 	"keywords": [
 		"node",
 		"express",
-		"static"
+		"hsd",
+		"ossc"
 	],
 	"env": {
 		"FIREBASE_SERVICE_ACCOUNT_BASE64": {
@@ -14,7 +16,8 @@
 			"value": "CHANGE_ME"
 		},
 		"SENTRY_DSN": {
-			"description": ""
+			"description": "The Sentry DSN for your project. This is used to report errors to Sentry. This is optional.",
+			"required": false
 		}
 	}
 }
