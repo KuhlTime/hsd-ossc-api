@@ -12,8 +12,8 @@
 	],
 	"env": {
 		"FIREBASE_SERVICE_ACCOUNT_BASE64": {
-			"description": "A BASE64 encoded string of your firestore admin credentials .json file.",
-			"value": "CHANGE_ME"
+			"description": "A BASE64 encoded string of your firestore admin credentials .json file. Follow the instructions inside the repos README file.",
+			"required": true
 		},
 		"SENTRY_DSN": {
 			"description": "The Sentry DSN for your project. This is used to report errors to Sentry. This is optional.",
