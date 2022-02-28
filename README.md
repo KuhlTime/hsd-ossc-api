@@ -2,9 +2,19 @@
   <img src="./assets/banner.png" alt="Banner" max-height="240px">
 </p>
 
-This is an API Server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store none user related information about the exams, scraped from the website.
+This is an API server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store none user related information about the exams, scraped from the website.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/KuhlTime/hsd-ossc-api/tree/main)
+
+## 🔐 Privacy
+
+I have designed the application so it does not expose any user information. Though make sure you follow these rules:
+
+- NEVER GIVE YOUR CREDENDENTIALS TO SOMEONE YOU DON'T TRUST. 
+- DO NOT USE CODE YOU HAVE NOT REVIEWED.
+- ALLWAYS USE HTTPS.
+
+And remember: "With great power comes great responsibility"
 
 ## 👩‍💻 Setup
 
@@ -77,6 +87,10 @@ docker run\
 
 Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
 ![Request Flowchart](assets/request-flow.png)
+
+## 🙋‍♂️ Questions
+
+In case you got any questions or like to contribute I am happy to help.
 
 ## 👨‍⚖️ Disclaimer
 
