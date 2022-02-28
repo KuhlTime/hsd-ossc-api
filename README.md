@@ -95,3 +95,7 @@ In case you got any questions or like to contribute I am happy to help.
 ## 👨‍⚖️ Disclaimer
 
 I will not take any responsibility for any malfunctions or consequences that may arise from using this tool. For the development of this tool I used the following ressource: [Notenspiegel vom Prüfungsamt abrufen (QIS)](https://www.python-forum.de/viewtopic.php?t=9870)
+
+## 🌋 Limitations
+
+I was only able to test the application with my bachelors degree in ee and informational technologies. The application most likely needs to be updated in order to support different degrees.
