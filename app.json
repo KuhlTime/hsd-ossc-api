@@ -1,0 +1,20 @@
+{
+	"name": "OSSC API",
+	"description": "This is a self hosted, unofficial, privacy first, OSSC API that can fetch your grades from the ossc server.",
+	"repository": "https://github.com/heroku/node-js-getting-started",
+	"logo": "https://node-js-sample.herokuapp.com/node.png",
+	"keywords": [
+		"node",
+		"express",
+		"static"
+	],
+	"env": {
+		"FIREBASE_SERVICE_ACCOUNT_BASE64": {
+			"description": "A BASE64 encoded string of your firestore admin credentials .json file.",
+			"value": "CHANGE_ME"
+		},
+		"SENTRY_DSN": {
+			"description": ""
+		}
+	}
+}
