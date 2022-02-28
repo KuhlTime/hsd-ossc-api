@@ -4,7 +4,7 @@
 
 This is an API Server to easly get grades and exam data from the OSSC grades server. The API uses Firebase as a backend in order to store none user related information about the exams, scraped from the website.
 
-[![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=850a4eba40bb&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/KuhlTime/hsd-ossc-api/tree/main)
 
 ## 🛣 Concept
 
