@@ -1,6 +1,6 @@
 {
 	"name": "OSSC API",
-	"description": "This is a self hosted, unofficial, privacy first, OSSC API that provides an easy to use API for your HSD OSSC grades.",
+	"description": "This is a self hosted, unofficial, privacy first, API that can retrieve your grades from the OSSC server for you.",
 	"repository": "https://github.com/KuhlTime/hsd-ossc-api",
 	"logo": "https://raw.githubusercontent.com/KuhlTime/KuhlTime/main/assets/hsd.svg",
 	"website": "https://github.com/KuhlTime/hsd-ossc-api",
