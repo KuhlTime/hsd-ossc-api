@@ -5,6 +5,7 @@
 import https from 'https'
 import colors from 'colors'
 import querystring from 'querystring'
+import { v4 as uuidv4 } from 'uuid'
 import { URL } from 'url'
 import { IncomingMessage } from 'http'
 import { TableParser, Table } from '../utilities/TableParser'
@@ -366,19 +367,22 @@ export default class OsscSession {
 		const start = Date.now()
 		let cookie: string | undefined
 
+		// Generate unique sessionid
+		let sessionId = uuidv4().substring(0, 8)
+
 		try {
 			// Get required information
 			cookie = await this.getCookie(username, password)
-			this.userLog(username, 'Recived Cookie')
+			this.userLog(sessionId, 'Recived Cookie')
 
 			const asi = await this.getAsi(cookie)
-			this.userLog(username, 'Recieved ASI')
+			this.userLog(sessionId, 'Recieved ASI')
 
 			const degreeId = await this.getDegreeId(cookie, asi)
-			this.userLog(username, 'Recived Degree ID')
+			this.userLog(sessionId, 'Recived Degree ID')
 
 			const a = await this.getRegulationAndTopicId(cookie, asi, degreeId)
-			this.userLog(username, 'Recieved Regulation and Topic ID')
+			this.userLog(sessionId, 'Recieved Regulation and Topic ID')
 
 			// Get all the html table from the grades page
 			const tables = await this.getGrades(cookie, asi, degreeId, a.topicId, a.regulationId)
@@ -389,15 +393,15 @@ export default class OsscSession {
 			// Extract grade information from the second html table on the page
 			const extract = new ModuleExtract(tables[1])
 
-			this.userLog(username, 'Recieved and Parsed Results')
+			this.userLog(sessionId, 'Recieved and Parsed Results')
 
 			await this.getAllScores(extract, cookie)
 
 			const duration = Date.now() - start
-			this.userLog(username, 'Request duration: ' + duration + 'ms')
+			this.userLog(sessionId, 'Request duration: ' + duration + 'ms')
 
 			this.logout(cookie).then(() => {
-				this.userLog(username, 'Logged Out')
+				this.userLog(sessionId, 'Logged Out')
 			})
 
 			const response = classToPlain({
@@ -415,12 +419,12 @@ export default class OsscSession {
 			// In case the user has already been logged in when the error occurred. -> Logout
 			if (cookie) {
 				this.logout(cookie).then(() => {
-					this.userLog(username, 'Logged Out')
+					this.userLog(sessionId, 'Logged Out')
 				})
 			}
 
 			console.error(error)
-			this.userErrorLog(username, error as Error)
+			this.userErrorLog(sessionId, error as Error)
 
 			return Promise.reject(error)
 		}
