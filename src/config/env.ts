@@ -8,7 +8,6 @@ dotenv.config({
 const env = process.env.NODE_ENV
 const port = process.env.PORT
 const logLevel = process.env.LOG_LEVEL || env === 'production' ? 'info' : 'debug'
-const morganFormat = env === 'production' ? 'short' : 'dev'
 const sentryDsn = process.env.SENTRY_DSN
 
 if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
@@ -21,4 +20,4 @@ const firebaseServiceAccount = JSON.parse(
 	Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('ascii')
 )
 
-export { env, port, logLevel, sentryDsn, morganFormat, firebaseServiceAccount }
+export { env, port, logLevel, sentryDsn, firebaseServiceAccount }

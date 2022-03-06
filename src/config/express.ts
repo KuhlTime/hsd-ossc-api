@@ -1,10 +1,9 @@
 import express from 'express'
 import cors from 'cors'
-import morgan from 'morgan'
 import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing'
 
-import { morganFormat, sentryDsn } from './env'
+import { sentryDsn } from './env'
 
 // load router
 import osscRouter from '../routes/ossc'
@@ -40,7 +39,6 @@ if (sentryDsn) {
 // setup middlewares
 app.use(express.json())
 app.use(cors())
-app.use(morgan(morganFormat))
 
 // use routers
 // app.use(swaggerRouter)
