@@ -10,7 +10,7 @@ This is an API server to easly get grades and exam data from the OSSC grades ser
 
 I have designed the application so it does not expose any user information. Though make sure you follow these rules:
 
-- NEVER GIVE YOUR CREDENDENTIALS TO SOMEONE YOU DON'T TRUST. 
+- NEVER GIVE YOUR CREDENDENTIALS TO SOMEONE YOU DON'T TRUST.
 - DO NOT USE CODE YOU HAVE NOT REVIEWED.
 - ALLWAYS USE HTTPS.
 
@@ -23,6 +23,8 @@ In order to use the API you can either deploy the code on a PaaS (e.g. [Heroku](
 ### 👾 Environment Variables
 
 - `FIREBASE_SERVICE_ACCOUNT_BASE64`: This variable holds a Base64 encoded string of the service account json file, you can download from you firebase console. To encode the file use the following shell command:
+
+	![Firebase Setup Video](assets/firebase-setup.gif)
 
 	```sh
   cat serviceAccountKey.json | base64
@@ -82,7 +84,7 @@ docker run\
 	```sh
 	curl "https://ossc.api.kuhlti.me/data"
 	```
-	
+
 ## 🛣 Concept
 
 Here you can see a flow diagram on how to retrive the students grades and the scores of each exam from the OSSC site. Each box represents a single HTTP Request. Each request depends on information from the previous request.
