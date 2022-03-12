@@ -1,9 +1,9 @@
-import auth from 'basic-auth'
-import { Request, Response, NextFunction } from 'express'
+import basicauth from 'basic-auth'
+import { Response, NextFunction } from 'express'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const authGuard = (req: any, res: Response, next: NextFunction) => {
-	const user = auth(req)
+const auth = (req: any, res: Response, next: NextFunction) => {
+	const user = basicauth(req)
 
 	if (user) {
 		req.user = user
@@ -17,4 +17,4 @@ const authGuard = (req: any, res: Response, next: NextFunction) => {
 	}
 }
 
-export default authGuard
+export default auth
