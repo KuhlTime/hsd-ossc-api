@@ -34,7 +34,7 @@
 		"class-transformer": "^0.5.1",
 		"colors": "^1.4.0",
 		"cors": "^2.8.5",
-		"dotenv": "^15.0.0",
+		"dotenv": "^16.0.1",
 		"express": "^4.17.2",
 		"firebase-admin": "^10.0.2",
 		"lodash": "^4.17.21",
